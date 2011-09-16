@@ -1,0 +1,24 @@
+{% if area_name == "all" %}
+	
+	<ul class="tabs">
+		<li class="map selected">Map</li>
+		<li class="pictures">Pictures</li>
+	</ul>
+	<img src="{{ STATIC_URL }}images/city_map.jpg" alt="City Map">
+	
+{% else %}
+
+	<ul class="tabs">
+		<li class="map">Map</li>
+		<li class="pictures selected">Pictures</li>
+	</ul>
+	<img src="{{ STATIC_URL }}images/city_guide_picture_1.jpg" alt="City Map">
+	<ul class="thumbnails">
+		<li><a href="#"><img src="{{ STATIC_URL }}images/city_guide_thumbnail_1.jpg" alt=""></a></li>
+		<li><a href="#"><img src="{{ STATIC_URL }}images/city_guide_thumbnail_2.jpg" alt=""></a></li>
+		<li><a href="#"><img src="{{ STATIC_URL }}images/city_guide_thumbnail_1.jpg" alt=""></a></li>
+		<li><a href="#"><img src="{{ STATIC_URL }}images/city_guide_thumbnail_2.jpg" alt=""></a></li>
+		<li><a href="#"><img src="{{ STATIC_URL }}images/city_guide_thumbnail_1.jpg" alt=""></a></li>
+	</ul>
+	
+{% endif %}

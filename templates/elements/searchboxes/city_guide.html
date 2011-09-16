@@ -1,0 +1,39 @@
+<!-- TODO: Translations and turn these into Django forms -->
+{% if area_name == "all" %}
+
+	<div id="search">
+		<fieldset id="fieldset_1">
+		<h2>{% gettext searchboxes-city_guide-london-fieldset_1_header %}</h2>
+		<input type="submit" name="view_london_properties" id="view_london_properties" class="button_2" value="{% gettext pageless-go_button %}">
+		</fieldset>
+		<fieldset id="fieldset_2">
+			<label for="branch">{% gettext searchboxes-city_guide-london-branch_label %}</label>
+			<select name="branch" class="branch">
+				<option value="head-office">Head Office</option> <!-- TODO: Options should be dynamically generated for all languages. -->
+			</select>
+			<p>{% gettext searchboxes-city_guide-london-contact-head %}</p> <!-- TODO: This part should be changed with some script on the fly. Everything matched by r'searchboxes-city_guide-london-contact-.*' should be in that array. -->
+			<p class="contact"><strong>+44 (0)208 896 9990</strong>reception@liferesidential.co.uk</p> <!-- TODO: These fields should be generated automatically. -->
+			<p class="address">Unit 2 Portal West Business Centre<br>6 Portal Way<br>London, W3 6RU</p>
+		</fieldset>
+	</div> <!-- end of: search -->
+
+{% else %}
+
+	<form id="search">
+		<fieldset id="fieldset_1">
+		<h2>{% gettext searchboxes-city_guide-central-fieldset_1_header %}</h2>
+		<input type="submit" name="view_london_properties" id="view_london_properties" class="button_2" value="{% gettext pageless-go_button %}">
+		</fieldset>
+		<fieldset id="fieldset_2"> <!-- TODO: This field should be generated automatically. -->
+		<h2>{% gettext searchboxes-city_guide-central-fieldset_2_header %}</h2>
+			<p class="address">Unit 2 Portal West Business Centre<br>6 Portal Way<br>London, W3 6RU</p> <!-- TODO: This field will be dynamically generated from a table. -->
+		</fieldset>
+		<fieldset id="fieldset_3">
+		<h2>{% gettext searchboxes-city_guide-central-fieldset_3_header %}</h2>
+			<p>Pelin Ahmet</p> <!-- TODO: These fields should be generated from a table -->
+			<p class="contact"><strong>+44 (0)208 896 9990</strong></p>
+			<a class="button_1" href="#">Email Pelin</a>
+		</fieldset>
+	</form>
+	
+{% endif %}

@@ -1,0 +1,113 @@
+<!-- TODO: The page need to be generated automatically. -->
+{% extends "skeleton_page.html" %}
+
+{% block container_class %}page detail{% endblock %}
+
+{% block before_content %}
+
+<div id="header">
+	
+	<div class="result_bar detail">
+		<a class="prev">&lt; Previous property</a>
+		<ul class="detail_options">
+			<li class="selected"><a href="#">Photos</a> |</li>
+			<li><a href="#">Map</a> |</li>
+			<li><a href="#">Floorplan</a></li>
+		</ul>
+		<a class="next">Next property &gt;</a>
+		<a class="back">Back to search results</a>
+	</div>
+
+</div> <!-- end of: header -->
+
+{% endblock %}
+
+{% block real_content_id %}detail{% endblock %}
+
+{% block real_content %}
+
+<div class="row" id="row1">
+	
+	<div id="map"><!-- TODO: These images shouldn't be stored in static since they will be uploaded via the admin interface. -->		
+		<img src="{{ STATIC_URL }}images/detail_image_1.jpg" alt="Detail Image">
+		<ul class="thumbnails">
+			<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_1.jpg" alt=""></a></li>
+			<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_2.jpg" alt=""></a></li>
+			<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_3.jpg" alt=""></a></li>
+			<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_4.jpg" alt=""></a></li>
+			<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_5.jpg" alt=""></a></li>
+		</ul>
+	</div> <!-- end of: map -->
+	
+	{% include "elements/search_form.html" %}
+	
+</div><!-- end of: row 1 -->
+
+<div id="sharebar" class="row">
+	<ul class="share">
+		<li><a href="#"><img src="{{ STATIC_URL }}images/love_icon.png" alt="Add to your shortlist"> Add to your shortlist</a></li>
+		<li><a href="#"><img src="{{ STATIC_URL }}images/email_icon.png" alt="Email to a friend"> Email to a friend</a></li>
+		<li><a href="#"><img src="{{ STATIC_URL }}images/print_icon.png" alt="Print this page"> Print this page</a></li>
+		<li><a href="#"><img src="{{ STATIC_URL }}images/facebook_icon.png" alt="Share this property"> Share this property</a></li>
+		<li><a href="#"><img src="{{ STATIC_URL }}images/twitter_icon_black.png" alt="Tweet this property"> Tweet this property</a></li>
+	</ul>
+</div> <!-- end of: sharebar -->
+
+<div class="row" id="row3">
+	
+	<div class="col1">
+		<h2>Property Details</h2>
+		<p><strong>Property Ref No: 3418</strong></p>
+		<p>An opportunity to purchase a simply stunning two bedroom and two bathroom apartment at London's newest and most prestigious London landmark building. At 43 storey's, Strata is a highly impressive modern residential tower incorporating cutting edge architecture and design and leading the way in sustainability. Sitting at the heart of Elephant &amp; Castle and only moments from the South Bank and transport links the development enjoys a highly enviable location</p>
+	</div>
+	
+	<div class="col2">
+		<h2>Key Features</h2>
+		<ul>
+			<li>16th Floor</li>
+			<li>Two bedroom/two bathroom (one en-suite)</li>
+			<li>London's newest prestigious residential skyscraper</li>
+			<li>Breathtaking views taking in all famous landmarks</li>
+			<li>Moments from Underground station</li>
+		</ul>
+
+		<h2>Local Information</h2>
+		<ul>
+			<li>Nearest Town Centre: 0.5m</li>
+			<li>Nearest School: 0.3m</li>
+			<li>Nearest Tube Station: 0.3m</li>
+		</ul>
+	</div>
+	
+	<div id="faq" class="col3">
+		
+		{% include "elements/faq_links.html" %}
+
+	</div> <!-- end of: faq -->
+	
+</div> <!-- end of: row3 -->
+
+<div class="row" id="row4"> <!-- TODO: Need to be generated automatically from the property and staff models -->
+	
+	<div class="col1">
+		<img src="{{ STATIC_URL }}images/staff_photo4.jpg" alt="Staff Member">
+	</div>
+	
+	<div class="col2">
+		<p><strong>Call Debbie to arrange a viewing on</strong></p>
+		<p><strong><span class="phone">+44 (0)208 896 9990</span> or...</strong></p>
+	</div>
+	
+	<div class="col3">
+		<p class="email"><img src="{{ STATIC_URL }}images/email_icon.png" alt="Send an email"> <strong><a href="#">Send an email</a></strong></p>
+	</div>
+	
+</div> <!-- end of: row4 -->
+
+{% endblock %}
+
+{% block sidebar_content %}{% endblock %}
+
+{% block after_content %}{% endblock %}
+
+{% block after_container %}{% endblock %}

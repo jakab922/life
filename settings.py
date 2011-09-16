@@ -2,6 +2,7 @@
 import os
 
 ProjectDir = os.getcwd()
+print 'ProjectDir', ProjectDir
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -44,12 +45,12 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ProjectDir + '/media/'
+MEDIA_ROOT = ProjectDir + '/life/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/media'
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -87,13 +88,17 @@ SECRET_KEY = '$vz%mjo!x%_=(b+%5k)3*s=-t-zd%e6685vj^q#(6uf_$$zi)6'
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+	 'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-	'django.core.context_processors.media',
-	'django.contrib.auth.context_processors.auth',
+	"django.contrib.auth.context_processors.auth",
+	"django.core.context_processors.debug",
+	"django.core.context_processors.i18n",
+	"django.core.context_processors.media",
+	"django.core.context_processors.static",
+	"django.contrib.messages.context_processors.messages"
 )
 
 MIDDLEWARE_CLASSES = (

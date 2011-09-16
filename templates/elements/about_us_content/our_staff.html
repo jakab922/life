@@ -1,0 +1,70 @@
+<div class="feature_section">
+	
+	<div class="staff_feature">
+		<img src="{{ STATIC_URL }}images/staff_feature_picture_1.jpg" alt="Staff Member">
+		<h3 class="staff_name">Jonathan Werth <span class="position">{% gettext searchboxes-our_staff-dirfund %}</span></h3>
+		<p>{% gettext searchboxes-our_staff-werth_description %}</p>
+		<span class="email"><a href="#">Email Jonathon &gt;</a></span>
+	</div>
+	
+	<div class="staff_feature">
+		<img src="{{ STATIC_URL }}images/staff_feature_picture_2.jpg" alt="Staff Member">
+		<h3 class="staff_name">Jason Dienaar <span class="position">{% gettext searchboxes-our_staff-dirfund %}</span></h3>
+		<p>{% gettext searchboxes-our_staff-dienaar_description %}</p>
+		<span class="email"><a href="#">Email Jason &gt;</a></span>
+	</div>
+	
+</div>
+
+{% for office in offices %}
+	
+	<div class="entry"> <!-- TODO: This is dynamically generated from the staff models. -->
+
+		<div class="entry_header" id="office_location">
+
+			<div class="column"> <!-- TODO: Generated stuff -->
+				<h3>Head Office</h3>
+				<ul> 
+					<li>T :  +44 (0)208 896 9990</li>
+					<li>F :  +44 (0)208 896 4475</li>
+					<li>E :  reception@liferesidential.co.uk</li>
+				</ul>
+			</div>
+
+			<div class="column">
+				<h3>{% gettext pageless-View_map %} &gt;</h3>
+				<ul> <!-- TODO: Generated stuff... -->
+					<li>Unit 2 Portal West Business Centre</li>
+					<li>6 Portal Way</li>
+					<li>London, W3 6RU</li>
+				</ul>
+			</div>
+
+		</div>
+
+		{% for member in office.staff %}
+			<div class="entry_detail">
+
+				<div class="col1">
+					<img src="{{ STATIC_URL }}images/staff_photo1.jpg" alt="Staff Member">
+				</div>
+
+				<div class="col2">
+					<ul>
+						<li><h4>Ilze Barnes</h4>
+							<p>Operations Manager</p></li>
+						<li><h4>Languages</h4>
+							<p>English, Afrikaan North Sotho</p></li>
+						<li><a href="#">Email Ilze &gt;</a></li>
+					</ul>
+				</div>
+
+				<div class="col3">
+					<p>Previously specialising in Human Resources - Learning &amp; Development, with a degree in Language Dynamics and Adult Education, Ilze is our Operations Manager. She also looks after human resources and marketing, making sure we cross our T’s and dot our I’s and that our team functions optimally.</p>
+					<a class="linkedin" href="#"><img src="{{ STATIC_URL }}images/linkedin_icon_black.png"> Linkedin profile</a>
+				</div>
+
+			</div>
+		{% endfor %}
+	
+{% endfor %}

@@ -1,0 +1,16 @@
+<div id="search">
+	<ul class="sidenav">
+		<li {% if service_name == 'landlord_services' %}class="selected"{% endif %}><a href="/landlord_services/base/">{% gettext search-landlord_services-landlord_services_link %}</a></li>
+		<li{% if service_name == 'property_management' %}class="selected"{% endif %}><a href="/landlord_services/property_management/">{% gettext search-landlord_services-property_management_link %}</a></li>
+		<li{% if service_name == 'tax_advice' %}class="selected"{% endif %}><a href="/landlord_services/tax_advice/">{% gettext search-landlord_services-tax_advice_link %}</a></li>
+		<li{% if service_name == 'fursnishing' %}class="selected"{% endif %}><a href="/landlord_services/furnishing/">{% gettext search-landlord_services-furnishing_link %}</a></li>
+		<li{% if service_name == 'client_info' %}class="selected"{% endif %}><a href="/landlord_services/client_info/">{% gettext search-landlord_services-client_info_link %}</a></li>
+		<li{% if service_name == 'engagement_terms' %}class="selected"{% endif %}><a href="/landlord_services/engagement_terms/">{% gettext search-landlord_services-engagement_terms_link %}</a></li>
+	</ul>
+	<h2>{% gettext search-landlord_services-header_1 %}</h2>
+	<p>{% gettext search-landlord_services-description_1 %}</p>
+	<span class="phone">020 8896 9990</span>
+
+	<h3>{% gettext search-landlord_services-header_2 %}</h3>
+	<p>{% gettext search-landlord_services-description_2 %}</p>
+</div> <!-- end of: search -->

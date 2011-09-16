@@ -1,0 +1,155 @@
+<!-- TODO: Add translations to this page -->
+{% extends "base.html" %}
+
+{% load element_translator %}
+{% block content %}
+	<div id="container" class="home">
+		{% include "elements/topbar.html" %}
+		
+		<div id="mainbody">
+			
+			<div id="header">
+				
+				{% include "elements/nav_mobile.html" %}
+				
+				{% include "elements/search_form.html" %}
+				
+			</div> <!-- end of: header -->
+		
+			<div id="banner">
+			
+				<div id="feature"> 
+					<!-- TODO: This part probably needs to be generated automatically and needs its own template. -->
+					<div class="slidewrap" data-autorotate="8000"> 
+						<ul class="slidecontrols"> 
+							<li><a href="#sliderName" class="next">Next</a></li> 
+							<li><a href="#sliderName" class="prev">Prev</a></li> 
+						</ul> 
+						<ul class="slider" id="sliderName"> 
+							<li class="slide"> 
+								<img src="{{ STATIC_URL }}images/slider_image_1.jpg" alt="Slider Image 1"/> 
+							</li> 
+							<li class="slide"> 
+								<img src="{{ STATIC_URL }}images/slider_image_2.jpg" alt="Slider Image 2"/> 
+							</li> 
+							<li class="slide"> 
+								<img src="{{ STATIC_URL }}images/slider_image_3.jpg" alt="Slider Image 3"/> 
+							</li> 
+							<li class="slide"> 
+								<img src="{{ STATIC_URL }}images/slider_image_4.jpg" alt="Slider Image 4"/> 
+							</li> 
+						</ul> 
+					</div>
+
+				</div> <!-- end of: feature -->
+
+			</div> <!-- end of: banner -->
+		
+		
+			<div id="segments">
+				<div id="col1" class="col">
+					<h2>{% gettext pageless-Landlords %}</h2>
+					<p>{% gettext index-landlords_description" %}</p>
+					<a href="{% url landlords %}">{% gettext pageless-Find_out_more %} &gt;</a>
+				</div>
+				<div id="col2" class="col">
+					<h2>{% gettext pageless_Tenants %}</h2>
+					<p>Multilingual property administration is available for overseas landlords, including property maintenance. LIFE Residential are</p>
+					<a href="{% url tenants %}">{% gettext pageless_Find_out_more %} &gt;</a>
+				</div>
+				<div id="col3" class="col">
+					<h2>{% gettext pageless_Buyers %}</h2>
+					<p>Multilingual property administration is available for overseas landlords, including property maintenance. LIFE Residential are</p>
+					<a href="{% url buyers %}">{% gettext pageless-Find_out_more %} &gt;</a>
+				</div>
+				<div id="col4" class="col">
+					<h2>{% gettext pageless-Sellers %}</h2>
+					<p>Multilingual property administration is available for overseas landlords, including property maintenance. LIFE Residential are</p>
+					<a href="{% url sellers %}">{% gettext pageless-Find_out_more %} &gt;</a>
+				</div>
+			</div> <!-- end of: segments -->
+		
+			<div id="portals">
+			
+				<div id="portal_matrix">
+					<h3>{% gettext index-portal_matrix_header %}</h3>
+					<p>{% gettext index-portal_matrix_description %}</p>
+					<ul>
+						<li><img src="{{ STATIC_URL }}images/logos/zoopla.jpg" alt="Zoopla"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/rightmove.jpg" alt="Rightmove"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/globrix.jpg" alt="Globrix"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/loot.jpg" alt="Loot"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/findaproperty.jpg" alt="Findaproperty"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/primelocation.jpg" alt="Prime Location"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/gumtree.jpg" alt="Gumtree"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/fish4homes.jpg" alt="fish4homes"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/email4property.jpg" alt="email4property"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/ukpropertyshop.jpg" alt="UK Property Shop"></li>
+
+						<li><img src="{{ STATIC_URL }}images/logos/london2let.jpg" alt="london2let"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/estateangels.jpg" alt="estate angels"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/londoneveningstandard.jpg" alt="London Evening Standard"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/zoomf.jpg" alt="Zoomf"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/movetouk.jpg" alt="moveto.co.uk"></li>
+						<li><img src="{{ STATIC_URL }}images/logos/look4aproperty.jpg" alt="look4aproperty.com"></li>
+					</ul>
+				</div> <!-- end of: portal_matrix -->
+			
+				{% include "elements/twitter_feed.html" %}
+
+				<div id="iphone_app">
+					<h3>iPhone app</h3>
+					<p>{% gettext iphone_app-description %}</p>
+					<a href="">
+						<img src="{{ STATIC_URL }}images/iphone-ipad.png" alt="iphone app">
+					</a>
+					<a href="#" class="button_2">{% gettext iphone_app-download %}</a>
+
+					{% include "elements/follow_us.html" %}
+
+				</div> <!-- end of: iphone_app -->
+			
+			</div> <!-- end of: portals -->
+		
+			<div id="aboutus">
+			
+				{% include "elements/our_staff.html" %}
+			
+				<div id="faq">
+					
+					{% include "elements/faq_links.html" %}
+					
+				</div>
+			
+			</div> <!-- end of: aboutus -->
+		
+			{% include "elements/testimonials.html" %}
+		
+			{% include "elements/logos.html" %}
+		
+		</div> <!-- end of: mainbody -->
+		
+		{% include "elements/footer.html" %}
+		
+		{% include "elements/alert_modal.html" %}
+		
+		{% include "elements/contact_modal.html" %}
+		
+	</div> <!-- end of: container -->
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+		$('.slidewrap').carousel({
+		slider: '.slider',
+		slide: '.slide',
+		slideHed: '.slidehed',
+		nextSlide : '.next',
+		prevSlide : '.prev',
+		addPagination: true,
+		addNav : false
+		});
+
+		});
+	</script>
+>
+{% endblock %}

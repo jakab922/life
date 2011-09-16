@@ -1,0 +1,29 @@
+{% extends "skeleton_page.html" %}
+
+{% block container_class %}page tenants currency_exchange property_management landlords services{% endblock %}
+
+{% block before_content %}{% endblock %}
+
+{% block real_content_id %}tenants{% endblock %}
+
+{% block real_content %}
+
+<div id="map" class="single article">
+	
+	{% include "elements/media/landlord_services.html" %}
+
+	{% include content_name %}
+	
+</div>
+
+{% endblock %}
+
+{% block sidebar_content %}
+
+{% include "elements/searchboxes/landlord_services.html" %}
+
+{% include "elements/newsletter.html" %}
+
+{% endblock %}
+
+{% block after_content %}{% endblock %}

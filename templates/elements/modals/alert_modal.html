@@ -1,0 +1,19 @@
+<!-- TODO: Translations are needed -->
+<div id="alert_modal" class="hidden">
+		
+	<div id="alerts">
+		<a href="#" class="close_alerts"><img src="{{ STATIC_URL }}images/close_btn.png" alt="{% gettext modals-alert_modal-close_alt %}"></a>
+		<h3>{% gettext modals-alert_modal-header_1 %}</h3>
+		<p>{% gettext modals-alert_modal-paragraph_1 %}</p>
+		<!-- TODO: Replace this with a django form. Form translation shall be done dynamically. -->
+		<form id="email_alerts">
+			<input type="text" name="email" id="email" placeholder="{% gettext modals-alert_modal-email_placeholder %}">
+			<p>Send me alerts for:</p>
+			<select name="alert_length" id="alert_length">
+				<option value="one-week" name="one-week">One week</option>
+			</select>
+			<input type="submit" class="button_1" value="Create an email alert">
+		</form>
+	</div> <!-- end of: alerts -->
+	
+</div> <!-- end of: alert_modal -->

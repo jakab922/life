@@ -1,0 +1,59 @@
+{% load element_translator %}
+<!-- TODO: Translate template tag need to be made and added to this page -->
+<div id="topbar">
+	
+	<div id="topbar_inner">
+		<div id="topbar_1">	
+			<a href="/uk/index/"><img id="logo" src="{{ STATIC_URL }}images/logo.png" alt="LIFE Residential" /></a> 
+		</div> <!-- end of: topbar_1 -->
+		<div id="topbar_2"> 
+			<ul id="nav"> 
+				<li><a href="/uk/index/"><img src="{{ STATIC_URL }}images/home_icon.png" alt="home"/> Home</a></li> 
+				<li><a href="{% url landlords %}">{% gettext pageless-Landlords %}</a></li> 
+				<li><a href="{% url tenants %}">{% gettext pageless-Tenants %}</a></li> 
+				<li><a href="{% url buyers %}">{% gettext pageless-Sales %}</a></li> 
+				<li><a href="{% url corporate %}">{% gettext pageless-Corporate %}</a></li> 
+				<li><a href="/about_us/base/">{% gettext pageless-About_us %}</a></li> 
+				<li class="contact"><a href="#">{% gettext pageless-Contact_us %}</a></li> 
+			</ul>
+			<h2>{% gettext pageless-Welcome %}</h2><!-- TODO: Make this part changeable based on page. Also needs customised translation. -->
+		</div> <!-- end of: topbar_2 -->
+		<div id="topbar_3"> 
+			<strong>{% gettext pageless-Call_us_now %} +44 (0)208 896 9990</strong> 
+			<div id="language"> 
+				<form id="language_selection">
+					<!-- TODO: Add for cycle here to show all languages --> 
+					<select id="language_selector" name="property_type" class="property_type" >
+						{% for lang_code, lang in languages %}
+							<option value="/{{ lang_code }}{{ pagename }}">{{ lang }}</option>
+						{% endfor %}
+					</select> 
+					<img src="{{ MEDIA_URL }}{{ curr_flag }}" alt="{{ curr_lang }}" class="language" />
+					<!-- End of for cycle --> 
+				</form> 
+			</div> <!-- end of: language -->	
+			<div id="shortlist-link">
+				<!-- TODO: Make models and stuff like that for this -->
+				<a href="#">{% gettext topbar-View_your_shortlist %} (0) &gt;</a> 
+			</div> <!-- end of: shortlist-link -->
+		</div> <!-- end of: topbar_3 --> 
+	</div> <!-- end of: topbar_inner -->
+	
+	<div class="topnav_mobile">
+		<ul> 
+			<li> 
+				<img src="{{ STATIC_URL }}images/mobile_nav_home_icon.png" alt="home"/> 
+				<a href="/uk/index/">{% gettext pageless-Home %}</a> 
+			</li> 
+			<li> 
+				<img src="{{ STATIC_URL }}images/mobile_nav_search_icon.png" alt="search"/> 
+				<a href="{% url search %}">{% gettext pageless-Property_search %}</a> 
+			</li> 
+			<li> 
+				<img src="{{ STATIC_URL }}images/mobile_nav_shortlist_icon.png" alt="shortlist"/> 
+				<a href="#">{% gettext topbar-View_Shortlist %} (0)</a> <!-- TODO: Auto generate the number of results. --> 
+			</li> 
+		</ul> 
+	</div> <!-- end of: topnav_mobile -->
+						
+</div> <!-- end of: topbar -->

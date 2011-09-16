@@ -1,0 +1,66 @@
+<!-- TODO: Need to insert translation tags here -->
+<div id="footer">
+	<div class="topnav_mobile">
+		<ul>
+			<li>
+				<img src="{{ STATIC_URL }}images/mobile_nav_home_icon.png" alt="home">
+				<a href="/uk/index/">{% gettext pageless-Home %}</a>
+			</li>
+			<li>
+				<img src="{{ STATIC_URL }}images/mobile_nav_search_icon.png" alt="search">
+				<a href="{% url search %}">{% gettext pageless-Property_search %}</a>
+			</li>
+			<li>
+				<img src="{{ STATIC_URL }}images/mobile_nav_shortlist_icon.png" alt="shortlist">
+				<a href="#">{% gettext pageless-element name %} (0)</a> <!-- TODO: Generate the number and the link dynamically -->
+			</li>
+		</ul>
+	</div> <!-- end of: topnav_mobile -->
+	<div id="footer_top">
+		<img src="{{ STATIC_URL }}images/logo_footer.png" alt="LifeResidential">
+		<div id="footer_col1">
+			<h4>{% gettext footer-column_1_header %}</h4>
+			<ul>
+				<li><a href="/about_us/base/">{% gettext pageless-About_us %}</a></li>
+				<li><a href="/about_us/recruitment/">{% gettext pageless-Recruitment %}</a></li>
+				<li><a href="/about_us/our_staff/">{% gettext pageless-Our_Staff %}</a></li>
+			</ul>
+		</div> <!-- end of: footer_col1 -->
+		<div id="footer_col2">
+			<h4>{% gettext footer-column_2_header %}</h4>
+			<ul>
+				<li><a href="{% url landlords %}">{% gettext pageless-Landlords %}</a></li>
+				<li><a href="{% url tenants %}">{% gettext pageless-Tenants %}</a></li>
+				<li><a href="{% url buyers %}">{% gettext pageless-Sales %}</a></li>
+				<li><a href="{% url corporate %}">{% gettext pageless-Corporate %}</a></li>
+				<li><a href="/landlord_services/base/">{% gettext pageless-Landlord_Services %}</a></li>
+			</ul>
+		</div> <!-- end of: footer_col2 -->
+		<div id="footer_col3">
+			<h4>{% gettext footer-column_3_header %}</h4>
+			<ul>
+				<li><a href="{% url search %}">{% gettext pageless-Search %}</a></li>
+				<li><a href="/city_guide/all/">{% gettext pageless-City_Guide %}</a></li>
+				<li><a href="{% url currency_exchange %}">{% gettext pageless-Currency_Exchange %}</a></li>
+				<li><a href="{% url faq %}">{% gettext pageless-FAQ %}</a></li>
+			</ul>
+		</div> <!-- end of: footer_col3 -->
+		<div id="footer_col4">
+			<h4>{% gettext footer-column_4_header %}</h4>
+			<ul>
+				<li><a href="#">{% gettext pageless-Privacy_Policy %}</a></li>
+				<li><a href="#">{% gettext pageless-Terms_and_Conditions %}</a></li>
+			</ul>
+		</div> <!-- end of: footer_col4 -->
+		<div id="footer_col5">
+			<h4>{% gettext pageless-Call_us_now %}</h4>
+			<ul>
+				<li>+44 (0)208 896 9990</li>
+			</ul>
+		</div> <!-- end of: footer_col5 -->
+	</div> <!-- end of: footer top -->
+	<div id="footer_bottom">
+		<p>{% gettext footer_bottom-paragraph_1 %}</p>
+		<p>{% gettext footer_bottom-paragraph_2 %}</p>
+	</div> <!-- end of: footer_bottom -->
+</div> <!-- end of: footer -->

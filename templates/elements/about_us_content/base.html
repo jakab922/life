@@ -1,0 +1,18 @@
+{% include "elements/reusable/slider.html" %}
+
+<div class="about_intro">
+
+	<div class="col1">
+		<h2>{% gettext about_us-base-column_1_header %}</h2>
+		<p>{% gettext about_us-base-column_1_paragraph_1 %}</p>
+		<p>{% gettext about_us-base-column_1_paragraph_2 %}</p>
+	</div>
+	
+	<div class="col2">
+		<h2>{% gettext about_us-base-column_2_header %}</h2>
+		{% gettext about_us-base-column_2_description %}
+	</div>
+	
+</div> <!-- end of: about_intro -->
+
+{% include "elements/our_staff.html" %}

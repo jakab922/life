@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div id="container" class="">
+		
+		{% include "elements/topbar.html" %}
+		
+		<div id="mainbody">
+			
+			<div id="content">
+				
+				<div id="" class="main">
+					
+				</div>
+				
+				<div id="sidebar">
+					
+					
+					
+					<div id="iphone_app">
+						
+						{% include "elements/iphone_app.html" %}
+						
+					</div> <!-- end of: iphone_app -->
+					
+					{% include "elements/follow_us.html" %}
+					
+				</div> <!-- end of: sidebar -->
+				
+			</div> <!-- end of: content -->
+			
+			{% include "elements/testimonials.html" %}
+			
+			{% include "elements/logos.html" %}
+			
+		</div> <!-- end of: mainbody -->
+		
+		{% include "elements/footer.html" %}
+		
+		{% include "elements/contact_modal.html" %}
+		
+		{% include "elements/alert_modal.html" %}
+		
+	</div> <!-- end of: container -->
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "skeleton_page.html" %}
+
+{% block container_class %}page tenants buyers{% endblock %}
+
+{% block before_content %}{% endblock %}
+
+{% block real_content_id %}tenants{% endblock %}
+
+{% block real_content %}
+
+<div id="map" class="single">
+	
+	{% include "elements/media/tenants.html" %}
+	
+	<div class="map_description col1">
+		<h2>{% gettext buyers-column_1_header %}</h2>
+		<p>{% gettext buyers-column_1_description %}</p>
+	</div>
+	
+	<div class="map_description col2">
+		<h2>{% gettext buyers-column_2_header %}</h2>
+		{% gettext buyers-column_2_description %}
+	</div>
+	
+</div>
+
+{% include "elements/our_staff.html" %}
+
+{% endblock %}
+
+{% block sidebar_content %}
+
+{% include "shortcuts/usual_sidebar.html" %}
+
+{% endblock %}
+
+{% block after_content %}{% endblock %}

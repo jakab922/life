@@ -1,0 +1,3 @@
+-media_*.html placeholder templates should be replaced with a sizeable media.html template which can hold picture, videos and maps
+-newsletter.html template should be parametrized to be a newsletter or an alert.
+-all search boxes should be moved to the searchboxes folder.

@@ -28,9 +28,15 @@ class LanguageAdmin(admin.ModelAdmin):
 admin.site.register(Language, LanguageAdmin)
 
 class TextElementAdmin(admin.ModelAdmin):
-	list_display = ('element_name', 'language')
-	list_filter = ('element_name', 'language')
-	ordering = ('language',)
-	search_fields = ('element_name', 'language')
+	search_fields = ('element_name',)
+	ordering = ('element_name',)
 	
 admin.site.register(TextElement, TextElementAdmin)
+
+class TextElementTranslationAdmin(admin.ModelAdmin):
+	list_display = ('element_name', 'language')
+	list_filter = ('element_name', 'language')
+	ordering = ('language', 'element_name')
+	search_fields = ('language__lang', 'element_name__element_name')
+	
+admin.site.register(TextElementTranslation, TextElementTranslationAdmin)

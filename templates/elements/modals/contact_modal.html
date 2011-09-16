@@ -1,0 +1,52 @@
+<!-- TODO: Add contact form and translations -->
+<div id="contact_modal" class="hidden">
+	<form id="contact">
+		<a href="#" class="close">
+			<img src="{{ STATIC_URL }}images/close_btn.png" alt="{% gettext modals-contact_modal-close_alt %}">
+		</a>
+		<fieldset class="branch">
+			<h2>{% gettext modals-contact-modal-branch_header %}</h2>
+			<label for="branch">{% gettext modals-contact-modal-branch_label %}</label>
+			<select name="branch">
+				<option value="Head Office" name="head_office">Head Office</option> <!-- TODO: Auto generation is needed based on the table. -->
+			</select>
+			<label>Contact Head Office at:</label>
+			<strong>+44 (0)208 896 9990
+			reception@liferesidential.co.uk</strong>
+			<ul class="address">
+				<li>Unit 2 Portal West Business Centre</li>
+				<li>6 Portal Way</li>
+				<li>London, W3 6RU</li>
+			</ul>
+			<a class="button_2" href="#">{% gettext pageless-View_map %}</a>
+		</fieldset>
+		<fieldset class="message">
+			<p>{% gettext modals-contact_modal-24_msg %}</p>
+			<div class="forms">
+				<div class="details">
+					<input type="text" name="first_name" placeholder="{% gettext modals-contact_modal-first_name_placeholder %}">
+					<input type="text" name="surname" placeholder="{% gettext modals-contact_modal-surname_placeholder %}">
+					<label for="preferred_contact">{% gettext modals-contact_modal-preferred_contact_label %}</label>
+					<select name="preferred_contact_method">
+						<option value="Email" name="option_email">{% gettext pageless-Email %}</option>
+						<option value="Phone" name="option_phone">{% gettext pageless-Phone %}</option>
+						<option value="Skype" name="option_skype">{% gettext pageless-Skype %}</option>
+					</select>
+					<input type="text" name="email" placeholder="{% gettext modals-contact_modal-email_placeholder %}">
+				</div>
+				
+				<div class="interests">
+					<label for="contract_type">{% gettext modals-contact_modal-contract_type_label %}</label>
+					<select name="contract_type">
+						<option value="Letting" name="letting">Letting</option> <!-- TODO: Should be auto generated based on contract type. -->
+					</select>
+					<label for="location">{% gettext modals-contact_modal-location_label %}</label>
+					<select name="location">
+						<option value="All of London" name="alloflondon">All of London</option> <!-- TODO: Should be generated based on available locations. -->
+					</select>
+				</div>
+			</div>
+			<input type="submit" value="Submit" class="button_1">
+		</fieldset>
+	</form>
+</div> <!-- end of: contact_modal -->

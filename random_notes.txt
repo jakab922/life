@@ -1,0 +1,7 @@
+The format of the text ids are:
+
+<page_name>[.<subpage_name>]: <element_name>
+
+For elements that don't belong to specific pages:
+
+pageless: <element_name>

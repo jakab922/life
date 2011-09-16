@@ -1,0 +1,30 @@
+<!-- TODO: Translation is needed and it should be generated from a django form. -->
+<!-- TODO: Alert box should be droppable. -->
+<form id="search">
+	<h2>{% gettext searchboxes-form-header %}</h2>
+	<fieldset id="fieldset_1">
+		{% gettext searchboxes-radio-Renting %} <input type="radio" name="customer_type" value="renting" checked="">
+		{% gettext searchboxes-radio-Buying %} <input type="radio" name="customer_type" value="buying">
+		
+		<label for="location"></label>
+		<input type="text" name="location" placeholder="{% gettext searchboxes-form-location_placeholder %}">
+		<p>{% gettext searchboxes-form-area_guide_paragraph %}</p>
+	</fieldset>
+	<fieldset id="fieldset_2">
+		<label for="property_type">{% gettext searchboxes-form-property_type_label %}</label>
+		<select name="property_type" class="property_type">
+			<option value="any">Any</option> <!-- TODO: This should be generated automatically. -->
+		</select>
+		
+		<label for="price">{% gettext searchboxes-form-price_label %}</label>
+		{% gettext searchboxes-form-From %} <select name="min_price"><option value="min">min</option></select>
+		{% gettext searchboxes-form-To %} <select name="max_price"><option value="max">max</option></select>
+		
+		<label for="number_of_bedrooms"></label>
+		{% gettext searchboxes-form-From %} <select name="min_bedrooms"><option value="min">min</option></select>
+		{% gettext searchboxes-form-To %} <select name="max_bedrooms"><option value="max">max</option></select>
+		
+		<a href="{% url search %}" class="button_2">{% gettext searchbox-form-search_button %}</a>
+	</fieldset>
+	<a href="#" class="button_1 alert_box"><img src="{{ STATIC_URL }}images/alert_icon.png" alt="{% gettext searchboxes-form-email_alert %}">{% gettext searchboxes-form-email_alert %}</a>
+</form> <!-- end of: search -->

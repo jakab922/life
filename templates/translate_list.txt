@@ -1,0 +1,57 @@
+pages:							-
+	buyers						ok
+	city_guide					ok
+	corporate					ok
+	currency_exchange			ok
+	detail						- dynamic parts are handled differently. static parts are handled by this framework.
+	faq							- same as with detail with the difference that there are no static parts here.
+	index						ok
+	landlord_services			ok
+	landlords
+	our_properties				ok
+	search						- same as with detail.
+	sellers						ok
+	tenants						ok
+elements:						-
+	about_us_content:			-
+		base					ok
+		our_staff				ok - more or less ready. Needs automatic data generation.
+		recruitment				ok
+	city_guide_content:			-
+		all						ok
+		central					ok
+	landlord_services_content:	-
+		client_info				
+		engagement_terms		
+		furnishing				
+		landlord_services		
+		property_management		
+		tax_advice				
+	media:						- Probably don't need to do this since this will change...
+		city_guide				-
+		landlord_services		-
+		landlords				-
+		tenants					-
+	modals:						-
+		alert_modal				ok - form should be generated dynamically and so is the text next to it.
+		contact_modal			
+	reusable:					-
+		faq_links				ok
+		follow_us				ok
+		footer					ok
+		iphone_app				ok
+		logos					ok
+		nav_mobile				ok
+		newsletter				- not in final form. Need to get back to this.
+		our_staff				ok - staff generation needed for dynamic tests
+		testimonials			ok - testimonials models needed
+		topbar					ok
+		twitter_feed			- this is dynamic and not translated.
+		slider					ok
+	searchboxes:				-
+		about_us				ok
+		city_guide				ok - dynamic stuff is needed here.
+		form					ok
+		landlord_services		ok
+		
+tags ending in: alt, placeholder and value must be edited from the admin interface for obvious reasons.

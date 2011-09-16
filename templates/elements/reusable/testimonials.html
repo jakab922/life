@@ -1,0 +1,11 @@
+<!-- TODO: Add translations and generate this part from the Testimonial model. -->
+<div id="testimonials">
+	<!-- TODO: Put this in a form cycle somehow -->
+	{% for i in three_element %}
+		<div class="testimonial" id="testimonial_{{ forloop.counter }}">
+			<p>“Lorraine, what an efficiency!! Really appreciated the prompt reply, I know I shall be in good hands.”</p>
+			<cite>Alex Lam, May 2001</cite>
+		</div> <!-- end of: testimonial_1 -->
+	{% endfor %}
+	<a href="">{% gettext reusable-testimonials-read_more %} &gt;</a>
+</div> <!-- end of: testimonials -->
