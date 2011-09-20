@@ -1,12 +1,13 @@
 <!-- TODO: Add contact form and translations -->
+{% load element_translator %}
 <div id="contact_modal" class="hidden">
 	<form id="contact">
 		<a href="#" class="close">
 			<img src="{{ STATIC_URL }}images/close_btn.png" alt="{% gettext modals-contact_modal-close_alt %}">
 		</a>
 		<fieldset class="branch">
-			<h2>{% gettext modals-contact-modal-branch_header %}</h2>
-			<label for="branch">{% gettext modals-contact-modal-branch_label %}</label>
+			<h2>{% gettext modals-contact_modal-branch_header %}</h2>
+			<label for="branch">{% gettext modals-contact_modal-branch_label %}</label>
 			<select name="branch">
 				<option value="Head Office" name="head_office">Head Office</option> <!-- TODO: Auto generation is needed based on the table. -->
 			</select>

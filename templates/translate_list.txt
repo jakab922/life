@@ -7,7 +7,7 @@ pages:							-
 	faq							- same as with detail with the difference that there are no static parts here.
 	index						ok
 	landlord_services			ok
-	landlords
+	landlords					ok
 	our_properties				ok
 	search						- same as with detail.
 	sellers						ok
@@ -21,12 +21,12 @@ elements:						-
 		all						ok
 		central					ok
 	landlord_services_content:	-
-		client_info				
-		engagement_terms		
-		furnishing				
-		landlord_services		
-		property_management		
-		tax_advice				
+		client_info				ok
+		engagement_terms		ok
+		furnishing				ok
+		landlord_services		ok
+		property_management		ok
+		tax_advice				ok
 	media:						- Probably don't need to do this since this will change...
 		city_guide				-
 		landlord_services		-
@@ -34,7 +34,7 @@ elements:						-
 		tenants					-
 	modals:						-
 		alert_modal				ok - form should be generated dynamically and so is the text next to it.
-		contact_modal			
+		contact_modal			ok
 	reusable:					-
 		faq_links				ok
 		follow_us				ok
@@ -53,5 +53,6 @@ elements:						-
 		city_guide				ok - dynamic stuff is needed here.
 		form					ok
 		landlord_services		ok
+		landlords				ok
 		
 tags ending in: alt, placeholder and value must be edited from the admin interface for obvious reasons.

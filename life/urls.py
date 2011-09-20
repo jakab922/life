@@ -5,7 +5,7 @@ from views import *
 urlpatterns = patterns('',
 	url(r'^$', to_english),
 	url(r'^(?P<lang_code>[a-z]{2})/$', index),
-	url(r'^landlords/$', direct_to_template, {'template': 'pages/landlords.html'}, name = 'landlords'),
+	url(r'^(?P<lang_code>[a-z]{2})/landlords/$', landlords),
 	url(r'^tenants/$', direct_to_template, {'template': 'pages/tenants.html'}, name = 'tenants'),
 	url(r'^buyers/$', direct_to_template, {'template': 'pages/buyers.html'}, name = 'buyers'),
 	url(r'^sellers/$', direct_to_template, {'template': 'pages/sellers.html'}, name = 'sellers'),

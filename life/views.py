@@ -2,6 +2,18 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from models import *
 
+def generate_base_dict(lang_code, pagename):
+	languages = [(langobj.lang_code, langobj.lang) for langobj in Language.objects.all()]
+	
+	for language in languages: # The current langauge need to be selected
+		if language[0] == lang_code:
+			languages.remove(language)
+			languages = [language] + languages
+			break
+	
+	return {'pagename': pagename, 'curr_lang_code': lang_code, 'curr_lang': Language.objects.filter(lang_code = lang_code)[0].lang, 'curr_flag': Language.objects.filter(lang_code = lang_code)[0].flag, 'languages': languages}
+	
+
 def landlord_services(request, service_name):
 	if service_name not in ['property_management', 'tax_advice', 'furnishing', 'client_info', 'engagement_terms']:
 		service_name = 'landlord_services' # put base in list and redirect to base if not in list...
@@ -28,15 +40,11 @@ def city_guide(request, area):
 		area = 'all'
 		
 	content_name = 'elements/city_guide_content/' + area + '.html'
-	media_name = 'elements/media/city_guide_'
-	
 	
 	if area == 'all':
 		container_class = 'page guide'
-		media_name += 'all.html'
 	else:
 		container_class = 'page guide area'
-		media_name += 'area.html'
 		
 	return render_to_response('pages/city_guide.html', { 'area_name': area, 'content_name': content_name, 'container_class': container_class }, context_instance = RequestContext(request))
 
@@ -61,18 +69,12 @@ def about_us(request, subpage):
 	return render_to_response('pages/about_us.html', {'subpage': subpage, 'content_name': content_name, 'real_content_id': real_content_id, 'container_class': container_class}, context_instance = RequestContext(request))
 	
 def index(request, lang_code):
-	languages = [(langobj.lang_code, langobj.lang) for langobj in Language.objects.all()]
+	template_dict = generate_base_dict(lang_code, '/')
 	
-	for language in languages: # The current langauge need to be selected
-		if language[0] == lang_code:
-			languages.remove(language)
-			languages = [language] + languages
-			break
-			 
-	curr_flag = Language.objects.filter(lang_code = lang_code)[0].flag
-	curr_lang = Language.objects.filter(lang_code = lang_code)[0].lang
+	template_dict['four_element'] = [1,2,3,4]
+	template_dict['three_element'] = [1,2,3]
 	
-	return render_to_response('pages/index.html', {'curr_lang_code': lang_code, 'pagename': '/', 'languages': languages, 'curr_flag': curr_flag, 'curr_lang': curr_lang}, context_instance = RequestContext(request))
+	return render_to_response('pages/index.html', template_dict, context_instance = RequestContext(request))
 	
 def to_english(request):
 	return redirect('/uk/')
@@ -80,3 +82,8 @@ def to_english(request):
 def search(request):
 	search_results = range(7)
 	return render_to_response('pages/search.html', {'search_results': search_results}, context_instance = RequestContext(request))
+	
+def landlords(request):
+	template_dict = generate_base_dict(lang_code, '/landlords/')
+	
+	

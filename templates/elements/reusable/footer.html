@@ -1,18 +1,19 @@
 <!-- TODO: Need to insert translation tags here -->
+{% load element_translator %}
 <div id="footer">
 	<div class="topnav_mobile">
 		<ul>
 			<li>
 				<img src="{{ STATIC_URL }}images/mobile_nav_home_icon.png" alt="home">
-				<a href="/uk/index/">{% gettext pageless-Home %}</a>
+				<a href="/{{ curr_lang_code }}/">{% gettext pageless-Home %}</a>
 			</li>
 			<li>
 				<img src="{{ STATIC_URL }}images/mobile_nav_search_icon.png" alt="search">
-				<a href="{% url search %}">{% gettext pageless-Property_search %}</a>
+				<a href="/{{ curr_lang_code }}/search/">{% gettext pageless-Property_search %}</a>
 			</li>
 			<li>
 				<img src="{{ STATIC_URL }}images/mobile_nav_shortlist_icon.png" alt="shortlist">
-				<a href="#">{% gettext pageless-element name %} (0)</a> <!-- TODO: Generate the number and the link dynamically -->
+				<a href="#">{% gettext pageless-View_Shortlist %} (0)</a> <!-- TODO: Generate the number and the link dynamically -->
 			</li>
 		</ul>
 	</div> <!-- end of: topnav_mobile -->
@@ -21,28 +22,28 @@
 		<div id="footer_col1">
 			<h4>{% gettext footer-column_1_header %}</h4>
 			<ul>
-				<li><a href="/about_us/base/">{% gettext pageless-About_us %}</a></li>
-				<li><a href="/about_us/recruitment/">{% gettext pageless-Recruitment %}</a></li>
-				<li><a href="/about_us/our_staff/">{% gettext pageless-Our_Staff %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/about_us/base/">{% gettext pageless-About_us %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/about_us/recruitment/">{% gettext pageless-Recruitment %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/about_us/our_staff/">{% gettext pageless-Our_Staff %}</a></li>
 			</ul>
 		</div> <!-- end of: footer_col1 -->
 		<div id="footer_col2">
 			<h4>{% gettext footer-column_2_header %}</h4>
 			<ul>
-				<li><a href="{% url landlords %}">{% gettext pageless-Landlords %}</a></li>
-				<li><a href="{% url tenants %}">{% gettext pageless-Tenants %}</a></li>
-				<li><a href="{% url buyers %}">{% gettext pageless-Sales %}</a></li>
-				<li><a href="{% url corporate %}">{% gettext pageless-Corporate %}</a></li>
-				<li><a href="/landlord_services/base/">{% gettext pageless-Landlord_Services %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/landlords/">{% gettext pageless-Landlords %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/tenants/">{% gettext pageless-Tenants %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/buyers/">{% gettext pageless-Sales %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/corporate/">{% gettext pageless-Corporate %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/landlord_services/base/">{% gettext pageless-Landlord_Services %}</a></li>
 			</ul>
 		</div> <!-- end of: footer_col2 -->
 		<div id="footer_col3">
 			<h4>{% gettext footer-column_3_header %}</h4>
 			<ul>
-				<li><a href="{% url search %}">{% gettext pageless-Search %}</a></li>
-				<li><a href="/city_guide/all/">{% gettext pageless-City_Guide %}</a></li>
-				<li><a href="{% url currency_exchange %}">{% gettext pageless-Currency_Exchange %}</a></li>
-				<li><a href="{% url faq %}">{% gettext pageless-FAQ %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/search/">{% gettext pageless-Search %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/city_guide/all/">{% gettext pageless-City_Guide %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/currency_exchange/">{% gettext pageless-Currency_Exchange %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/faq/">{% gettext pageless-FAQ %}</a></li>
 			</ul>
 		</div> <!-- end of: footer_col3 -->
 		<div id="footer_col4">

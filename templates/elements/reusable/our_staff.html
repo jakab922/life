@@ -1,14 +1,15 @@
 <!-- TODO: Add translations, and obviously it's a dynamically generated part of the page which uses the StaffMember model  -->
+{% load element_translator %}
 <div id="our_staff">
 	<h3>{% gettext reusable-our_staff-header %}</h3>
 	<p>{% gettext reusable-our_staff-paragraph_1 %}</p><!-- TODO: There is a link in this paragraph. It needs to be prepended with a language -->
 	
-	{% for i in four_element %}
+	{% for i in four_element %} <!-- TODO: Should be generated from staff database -->
 		<div id="staff_photo{{ forloop.counter }}">
 			<img src="{{ MEDIA_URL }}images/thumbnails/staff_photo1.jpg" alt="">
 			<span class="language">Turkish</span>
 			<span class="name">Pelin Ahmet</span>
-			<a href="#">{% gettext reusable-our_staff-Email-me %} &gt;</a>
+			<a href="#">{% gettext reusable-our_staff-Email_me %} &gt;</a>
 		</div>
 	{% endfor %}
 	

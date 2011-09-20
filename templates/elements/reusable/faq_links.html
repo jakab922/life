@@ -1,12 +1,13 @@
 <!-- TODO: Translations needed -->
+{% load element_translator %}
 <h3>{% gettext reusable-faq-faqs %}</h3>
 <ul>
-	<li><a href="{% url faq %}">{% gettext reusable-faq-furniture %}</a></li>
-	<li><a href="{% url faq %}">{% gettext reusable-faq-tax_advice %}</a></li>
-	<li><a href="{% url faq %}">{% gettext reusable-faq-client_info %}</a></li>
-	<li><a href="{% url faq %}">{% gettext reusable-faq-engagement_terms %}</a></li>
-	<li><a href="{% url faq %}">{% gettext resuable-faq-insurance %}</a></li>
-	<li><a href="{% url faq %}">{% gettext reusable-faq-protection %}</a></li>
+	<li><a href="/{{ curr_lang_code }}/faq/">{% gettext reusable-faq-furniture %}</a></li>
+	<li><a href="/{{ curr_lang_code }}/faq/">{% gettext reusable-faq-tax_advice %}</a></li>
+	<li><a href="/{{ curr_lang_code }}/faq/">{% gettext reusable-faq-client_info %}</a></li>
+	<li><a href="/{{ curr_lang_code }}/faq/">{% gettext reusable-faq-engagement_terms %}</a></li>
+	<li><a href="/{{ curr_lang_code }}/faq/">{% gettext reusable-faq-insurance %}</a></li>
+	<li><a href="/{{ curr_lang_code }}/faq/">{% gettext reusable-faq-protection %}</a></li>
 </ul>
 
-<a href="{% url faq %}">{% gettext resuable-faq-view_all %}</a>
+<a href="/{{ curr_lang_code }}/faq/">{% gettext reusable-faq-view_all %}</a>

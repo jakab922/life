@@ -4,15 +4,15 @@
 {% load element_translator %}
 {% block content %}
 	<div id="container" class="home">
-		{% include "elements/topbar.html" %}
+		{% include "elements/reusable/topbar.html" %}
 		
 		<div id="mainbody">
 			
 			<div id="header">
 				
-				{% include "elements/nav_mobile.html" %}
+				{% include "elements/reusable/nav_mobile.html" %}
 				
-				{% include "elements/search_form.html" %}
+				{% include "elements/searchboxes/form.html" %}
 				
 			</div> <!-- end of: header -->
 		
@@ -49,23 +49,23 @@
 			<div id="segments">
 				<div id="col1" class="col">
 					<h2>{% gettext pageless-Landlords %}</h2>
-					<p>{% gettext index-landlords_description" %}</p>
-					<a href="{% url landlords %}">{% gettext pageless-Find_out_more %} &gt;</a>
+					<p>{% gettext index-landlords_description %}</p>
+					<a href="/{{ curr_lang_code }}/landlords/">{% gettext pageless-Find_out_more %} &gt;</a>
 				</div>
 				<div id="col2" class="col">
-					<h2>{% gettext pageless_Tenants %}</h2>
-					<p>Multilingual property administration is available for overseas landlords, including property maintenance. LIFE Residential are</p>
-					<a href="{% url tenants %}">{% gettext pageless_Find_out_more %} &gt;</a>
+					<h2>{% gettext pageless-Tenants %}</h2>
+					<p>{% gettext index-tenants_description %}</p>
+					<a href="/{{ curr_lang_code }}/tenants/">{% gettext pageless-Find_out_more %} &gt;</a>
 				</div>
 				<div id="col3" class="col">
-					<h2>{% gettext pageless_Buyers %}</h2>
-					<p>Multilingual property administration is available for overseas landlords, including property maintenance. LIFE Residential are</p>
-					<a href="{% url buyers %}">{% gettext pageless-Find_out_more %} &gt;</a>
+					<h2>{% gettext pageless-Buyers %}</h2>
+					<p>{% gettext index-buyers_description %}</p>
+					<a href="/{{ curr_lang_code }}/buyers/">{% gettext pageless-Find_out_more %} &gt;</a>
 				</div>
 				<div id="col4" class="col">
 					<h2>{% gettext pageless-Sellers %}</h2>
-					<p>Multilingual property administration is available for overseas landlords, including property maintenance. LIFE Residential are</p>
-					<a href="{% url sellers %}">{% gettext pageless-Find_out_more %} &gt;</a>
+					<p>{% gettext index-sellers_description %}</p>
+					<a href="/{{ curr_lang_code }}/sellers/">{% gettext pageless-Find_out_more %} &gt;</a>
 				</div>
 			</div> <!-- end of: segments -->
 		
@@ -95,7 +95,7 @@
 					</ul>
 				</div> <!-- end of: portal_matrix -->
 			
-				{% include "elements/twitter_feed.html" %}
+				{% include "elements/reusable/twitter_feed.html" %}
 
 				<div id="iphone_app">
 					<h3>iPhone app</h3>
@@ -105,7 +105,7 @@
 					</a>
 					<a href="#" class="button_2">{% gettext iphone_app-download %}</a>
 
-					{% include "elements/follow_us.html" %}
+					{% include "elements/reusable/follow_us.html" %}
 
 				</div> <!-- end of: iphone_app -->
 			
@@ -113,27 +113,27 @@
 		
 			<div id="aboutus">
 			
-				{% include "elements/our_staff.html" %}
+				{% include "elements/reusable/our_staff.html" %}
 			
 				<div id="faq">
 					
-					{% include "elements/faq_links.html" %}
+					{% include "elements/reusable/faq_links.html" %}
 					
 				</div>
 			
 			</div> <!-- end of: aboutus -->
 		
-			{% include "elements/testimonials.html" %}
+			{% include "elements/reusable/testimonials.html" %}
 		
-			{% include "elements/logos.html" %}
+			{% include "elements/reusable/logos.html" %}
 		
 		</div> <!-- end of: mainbody -->
 		
-		{% include "elements/footer.html" %}
+		{% include "elements/reusable/footer.html" %}
 		
-		{% include "elements/alert_modal.html" %}
+		{% include "elements/modals/alert_modal.html" %}
 		
-		{% include "elements/contact_modal.html" %}
+		{% include "elements/modals/contact_modal.html" %}
 		
 	</div> <!-- end of: container -->
 	
