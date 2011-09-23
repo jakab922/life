@@ -40,3 +40,10 @@ class TextElementTranslationAdmin(admin.ModelAdmin):
 	search_fields = ('language__lang', 'element_name__element_name')
 	
 admin.site.register(TextElementTranslation, TextElementTranslationAdmin)
+
+class PropertyBranchAdmin(admin.ModelAdmin):
+	list_display = ('short_name', 'name')
+	ordering = ('short_name',)
+	search_fields = ('short_name', 'name')
+	
+admin.site.register(PropertyBranch, PropertyBranchAdmin)

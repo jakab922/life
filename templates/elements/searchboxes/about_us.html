@@ -1,11 +1,11 @@
-<!-- TODO: Translation is needed -->
+{% load element_translator %}
 <div id="search">
 	<ul class="sidenav">
-		<li {% if subpage == 'base' %}class="selected"{% endif %}><a href="/about_us/base/">{% gettext pageless-About_us %}</a></li>
-		<li {% if subpage == 'recruitment' %}class="selected"{% endif %}><a href="/about_us/recruitment/">{% gettext pageless-Recruitment %}</a></li>
-		<li {% if subpage == 'our_staff' %}class="selected"{% endif %}><a href="/about_us/our_staff/">{% gettext pageless-Our_Staff %}</a></li>
+		<li {% if subpage == 'base' %}class="selected"{% endif %}><a href="/{{ curr_lang_code }}/about_us/base/">{% gettext pageless-About_us %}</a></li>
+		<li {% if subpage == 'recruitment' %}class="selected"{% endif %}><a href="/{{ curr_lang_code }}/about_us/recruitment/">{% gettext pageless-Recruitment %}</a></li>
+		<li {% if subpage == 'our_staff' %}class="selected"{% endif %}><a href="/{{ curr_lang_code }}/about_us/our_staff/">{% gettext pageless-Our_Staff %}</a></li>
 	</ul>
 	<p class="contactus">{% gettext searchboxes-about_us-paragraph_1 %}</p>
 	{% gettext searchboxes-about_us-address_list %}
-	<a class="button_2" href="#">{% gettext pageless-View-map %}</a>
+	<a class="button_2" href="#">{% gettext pageless-View_map %}</a>
 </div> <!-- end of: search -->

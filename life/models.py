@@ -51,3 +51,43 @@ class TextElementTranslation(models.Model):
 	
 	def __unicode__(self):
 		return unicode((self.language, self.element_name))
+		
+# Property related models from here on
+class PropertyCity(models.Model):
+	name = models.CharField(max_length = 50)
+	
+	def __unicode__(self):
+		return unicode(self.name)
+
+class PropertyDistrict(models.Model):
+	name = models.CharField(max_length = 50)
+	city = models.ForeignKey('PropertyCity')
+	
+	def __unicode__(self):
+		return unicode(self.name + ', ' + self.city)
+
+class PropertyAddress(models.Model):
+	address = models.CharField(max_length = 200)
+	district = models.ForeignKey('PropertyDistrict')
+	postcode = models.CharField(max_length = 10)
+	
+	def __unicode__(self):
+		return unicode(self.address + ', ' + self.district)
+
+class PropertyBranch(models.Model):
+	code = models.CharField(max_length = 10)
+	name = models.CharField(max_length = 50)
+	address = models.ForeignKey('PropertyAddress')
+	phone = models.CharField(max_length = 30)
+	fax = models.CharField(max_length = 30)
+	email = models.CharField(max_length = 30)
+	
+	def __unicode__(self):
+		return unicode(self.name)
+		
+class PropertyLocation(models.Model):
+	name = models.CharField(max_length = 50)
+	district = models.ManyToManyField('PropertyDistrict')
+	
+	def __unicode__(self):
+		return unicode(self.name)

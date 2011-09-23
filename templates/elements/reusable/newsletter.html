@@ -1,14 +1,15 @@
 <!-- TODO: Add translations. -->
 <!-- TODO: Should be suitable for both newsletter and email alert. -->
+{% load element_translator %}
 <div id="alerts">
-	<h3>Sign up to our newsletter</h3>
-	<p>Receive news for properties within your search criteria</p>
+	<h3>{% gettext newsletter-header_1 %}</h3>
+	<p>{% gettext newsletter-paragraph_1 %}</p>
 	<form id="email_alerts"> <!-- TODO: Crete Django form for this. -->
-		<input type="text" name="email" id="email">
-		<p>I want to receive newsletters for:</p>
-		<select name="alert_length" id="alert_length">
+		<input type="text" name="email" id="email" placeholder="{% gettext newsletter-email_placeholder %}">
+		<p>{% gettext newsletter-form_paragraph %}</p>
+		<select name="alert_length" id="alert_length"> <!-- TODO: Options should be generated automatically. -->
 			<option value="one-week" name="one-week">One week</option>
 		</select>
-		<input type="submit" class="button_1" value="Sign up for newsletter">
+		<input type="submit" class="button_1" value="{% gettext newsletter-form_submit_alt %}">
 	</form>
 </div> <!-- end of: alerts -->

@@ -6,6 +6,7 @@
 
 {% block real_content_id %}tenants{% endblock %}
 
+{% load element_translator %}
 {% block real_content %}
 
 <div id="map">
@@ -44,11 +45,11 @@
 		<div class="col">
 			<h3>{% gettext landlords-row_2_column_2_header %}</h3>
 			<ul>
-				<li><a href="/landlord_services/property_management/">{% gettext landlords-property_management_link %}</a></li>
-				<li><a href="/landlord_services/tax_advice/"></a>{% gettext landlords-tax_advice_link %}</li>
-				<li><a href="/landlord_services/furnishing/">{% gettext landlords-furnishing_link %}</a></li>
-				<li><a href="/landlord_services/client_info/">{% gettext landlords-client_info_link %}</a></li>
-				<li><a href="/landlord_services/engagement_terms/">{% gettext landlords-engagement_terms_link %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/landlord_services/property_management/">{% gettext landlords-property_management_link %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/landlord_services/tax_advice/">{% gettext landlords-tax_advice_link %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/landlord_services/furnishing/">{% gettext landlords-furnishing_link %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/landlord_services/client_info/">{% gettext landlords-client_info_link %}</a></li>
+				<li><a href="/{{ curr_lang_code }}/landlord_services/engagement_terms/">{% gettext landlords-engagement_terms_link %}</a></li>
 			</ul>
 		</div>
 
@@ -101,7 +102,7 @@
 
 {% include "elements/searchboxes/landlords.html" %}
 
-{% include "elements/newsletter.html" %}
+{% include "elements/reusable/newsletter.html" %}
 
 {% endblock %}
 

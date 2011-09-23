@@ -1,0 +1,15 @@
+{% load element_translator %}
+{% if service_name == 'landlord_services' %}
+
+<ul class="tabs">
+	<li class="map selected">{% gettext media-Map %}</li>
+	<li class="pictures">{% gettext media-Video %}</li>
+</ul>
+<img src="{{ STATIC_URL }}images/picture_placeholder.jpg" alt="Picture Placeholder">
+
+{% else %}
+
+<strong class="breadcrumb"><a href="/{{ curr_lang_code }}/landlords/">{% gettext pageless-Landlords %}</a> &gt; <a href="/{{ curr_lang_code }}/landlord_services/landlord_services/">{% gettext pageless-Services %}</a> &gt; {{ selflink_text }}</strong>
+<img src="{{ STATIC_URL }}images/picture_placeholder.jpg" width="698" height="347" alt="Picture Placeholder">
+
+{% endif %}

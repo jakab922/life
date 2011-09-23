@@ -131,9 +131,6 @@ ul.nav_mobile, .topnav_mobile {
 #banner {
   position: relative;
 }
-#feature .prev, #feature .next {
-  display: none;
-}
 #feature {
   position: relative;
 }
@@ -141,7 +138,7 @@ ol.carousel-tabs {
   overflow: hidden;
   position: absolute;
   bottom: 20px;
-  left: 45%;
+  left: 48%;
 }
 ol.carousel-tabs li {
   display: block;
@@ -158,6 +155,43 @@ ol.carousel-tabs li a {
 ol.carousel-tabs li.carousel-active-tab a {
   background-image: url(../images/selected_control.png);
 }
+
+ul.slidecontrols {
+	width: 690px;
+	padding-left: 3px;
+	background: transparent;
+	overflow:hidden;
+	height: 53px;
+	position: absolute;
+	top: 45%;
+	margin: 0 auto;
+}
+
+.home ul.slidecontrols {
+	display:none;
+}
+
+ul.slidecontrols li {
+	display:block;
+	float: left;
+}
+
+ul.slidecontrols li:nth-child(2) {
+	float:right;
+}
+
+ul.slidecontrols li a {
+	display:block;
+	height: 53px;
+	width: 29px;
+	text-indent: -9999px;
+	background: url(../images/rightarrow.png) no-repeat;
+}
+
+ul.slidecontrols li:first-child a {
+	background: url(../images/leftarrow.png) no-repeat;
+}
+
 h3 {
   font-size: 18px;
   font-weight: bold;
@@ -279,6 +313,7 @@ strong.breadcrumb {
   min-height: 506px;
 }
 .staff #search {
+	height: auto;
   min-height: 425px;
   margin-top: 10px;
 }
@@ -295,6 +330,7 @@ strong.breadcrumb {
 }
 .about #search {
   min-height: 347px;
+	height:auto;
   padding-bottom: 0;
 }
 .about #search ul.sidenav {
@@ -310,6 +346,7 @@ strong.breadcrumb {
 }
 .landlords #search {
   margin-top: 52px;
+	height: auto;
   min-height: 383px;
   padding-bottom: 0;
 }
@@ -1255,7 +1292,6 @@ strong.breadcrumb {
   width: 200px;
 }
 .faq {
-  margin-top: 16px;
   padding-bottom: 20px;
   border-bottom: 1px solid #d6d6d6;
 }

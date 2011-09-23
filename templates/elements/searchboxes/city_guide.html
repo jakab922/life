@@ -1,4 +1,5 @@
-<!-- TODO: Translations and turn these into Django forms -->
+<!-- TODO: Turn these into Django forms -->
+{% load element_translator %}
 {% if area_name == "all" %}
 
 	<div id="search">
@@ -11,8 +12,8 @@
 			<select name="branch" class="branch">
 				<option value="head-office">Head Office</option> <!-- TODO: Options should be dynamically generated for all languages. -->
 			</select>
-			<p>{% gettext searchboxes-city_guide-london-contact-head %}</p> <!-- TODO: This part should be changed with some script on the fly. Everything matched by r'searchboxes-city_guide-london-contact-.*' should be in that array. -->
-			<p class="contact"><strong>+44 (0)208 896 9990</strong>reception@liferesidential.co.uk</p> <!-- TODO: These fields should be generated automatically. -->
+			<p>{% gettext searchboxes-city_guide-london-contact_head %}</p> <!-- TODO: This part should be changed with some script on the fly. Everything matched by r'searchboxes-city_guide-london-contact-.*' should be in that array. -->
+			<p class="contact"><strong>+44 (0)208 896 9990</strong> reception@liferesidential.co.uk</p> <!-- TODO: These fields should be generated automatically. -->
 			<p class="address">Unit 2 Portal West Business Centre<br>6 Portal Way<br>London, W3 6RU</p>
 		</fieldset>
 	</div> <!-- end of: search -->

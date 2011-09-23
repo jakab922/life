@@ -4,43 +4,7 @@
 
 {% block before_content %}
 
-<div id="header">
-	
-	<div class="result_bar">
-		
-		<div class="results_num">
-			<h3>73 Properties found</h3>
-		</div>
-
-		<div class="per_page">
-			<label for="per_page">Properties per page</label>
-			<select name="per_page">
-				<option value="25" name="25">25</option>
-			</select>
-		</div>
-
-		<div class="sort_by">
-			<label for="sort_by">Sort by:</label>
-			<select name="sort_by">
-				<option value="low-to-high" name="low-to-high">Low to High</option>
-			</select>
-		</div>
-
-		<div class="pagination">
-			<ul>
-				<li class="prev"><a>&lt; Previous</a></li>
-				<li class="page_number"><a href="#">1</a></li>
-				<li class="page_number selected"><a href="#">2</a></li>
-				<li class="page_number"><a href="#">3</a></li>
-				<li class="page_number"><a href="#">4</a></li>
-				<li class="page_number"><a href="#">5</a></li>
-				<li class="next"><a>Next &gt;</a></li>
-			</ul>
-		</div>
-		
-	</div> <!-- end of: result_bar -->
-	
-</div> <!-- end of: header -->
+{% include "elements/search_content/result_bar.html" with master_class="result_bar" %}
 
 {% endblock %}
 
@@ -74,7 +38,7 @@
 	</div>
 	<div class="result_options">
 		<span class="price">£250<small>p/w</small></span>
-		<a class="button_2" href="{% url detail %}">View details</a>
+		<a class="button_2" href="/{{ curr_lang_code }}/detail/">View details</a>
 		<a class="button_1" href="#">Add to shortlist</a>
 	</div>
 </div>
@@ -83,51 +47,19 @@
 
 {% block sidebar_content %}
 
-{% include "elements/search_form.html" %}
+{% include "elements/searchboxes/form.html" %}
 
-{% include "elements/newsletter.html" %}
+{% include "elements/reusable/newsletter.html" %}
 	
-{% include "elements/iphone_app.html" %}
+{% include "elements/reusable/iphone_app.html" %}
 
-{% include "elements/follow_us.html" %}
+{% include "elements/reusable/follow_us.html" %}
 
 {% endblock %}
 
 {% block after_content %}
 
-<div class="result_bar lower">
-	
-	<div class="results_num">
-		<h3>73 Properties found</h3>
-	</div>
-
-	<div class="per_page">
-		<label for="per_page">Properties per page</label>
-		<select name="per_page">
-			<option value="25" name="25">25</option>
-		</select>
-	</div>
-
-	<div class="sort_by">
-		<label for="sort_by">Sort by:</label>
-		<select name="sort_by">
-			<option value="low-to-high" name="low-to-high">Low to High</option>
-		</select>
-	</div>
-
-	<div class="pagination">
-		<ul>
-		<li class="prev"><a>&lt; Previous</a></li>
-		<li class="page_number"><a href="#">1</a></li>
-		<li class="page_number selected"><a href="#">2</a></li> <!-- TODO: selected need to be set based on page number -->
-		<li class="page_number"><a href="#">3</a></li>
-		<li class="page_number"><a href="#">4</a></li>
-		<li class="page_number"><a href="#">5</a></li>
-		<li class="next"><a>Next &gt;</a></li>
-		</ul>
-	</div>
-	
-</div>
+{% include "elements/search_content/result_bar.html" with master_class="result_bar lower" %}
 
 {% endblock %}
 

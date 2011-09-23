@@ -8,7 +8,7 @@
 
 {% block real_content %}
 
-<div id="map" class="single article">
+<div id="map" class="single article"> <!-- TODO: Should be stored in some database. -->
 	
 	<div class="map_description col1">
 		<div class="faq">
@@ -40,9 +40,9 @@
 
 {% block sidebar_content %}
 
-{% include "elements/search_form.html" %}
+{% include "elements/searchboxes/form.html" %}
 
-{% include "elements/newsletter.html" %}
+{% include "elements/reusable/newsletter.html" %}
 
 {% endblock %}
 

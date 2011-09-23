@@ -2,23 +2,24 @@
 
 {% block container_class %}{{ container_class }}{% endblock %}
 
+{% load element_translator %}
 {% block before_content %}
 
 <div id="header">
 	
 	<div class="result_bar guide">
 		<ul> <!-- TODO: select need to be added based on which page is selected -->
-			<li class="selected"><a href="/city_guide/all/">{% gettext city_guide-select_London %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-select_Central %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-select_City %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-select_North %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-select_North_East %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-select_East %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-select_South_East %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-select_South %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-select_South_West %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-West %}</a></li> | 
-			<li class="page_number"><a href="/city_guide/central/">{% gettext city_guide-select_North_West %}</a></li>
+			<li class="selected"><a href="/{{ curr_lang_code }}/city_guide/all/">{% gettext city_guide-select_London %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_Central %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_City %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_North %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_North_East %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_East %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_South_East %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_South %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_South_West %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_West %}</a></li> | 
+			<li class="page_number"><a href="/{{ curr_lang_code }}/city_guide/central/">{% gettext city_guide-select_North_West %}</a></li>
 		</ul>
 	</div>
 	

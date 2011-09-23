@@ -1,9 +1,10 @@
+{% load element_translator %}
 <div id="search">
 	<ul class="sidenav">
-		<li><a href="/landlord_services/base/">{% gettext pageless-Landlord_services %}</a></li>
-		<li><a href="{% url search %}">{% gettext pageless-View_our_properties %}</a></li>
-		<li><a href="{% url corporate %}">{% gettext pageless-Corporate %}</a></li>
-		<li><a href="{% url currency_exchange %}">{% gettext pageless-Currency_exchange %}</a></li>
+		<li><a href="/{{ curr_lang_code }}/landlord_services/base/">{% gettext pageless-Landlord_services %}</a></li>
+		<li><a href="/{{ curr_lang_code }}/search/">{% gettext pageless-View_our_properties %}</a></li>
+		<li><a href="/{{ curr_lang_code }}/corporate/">{% gettext pageless-Corporate %}</a></li>
+		<li><a href="/{{ curr_lang_code }}/currency_exchange/">{% gettext pageless-Currency_exchange %}</a></li>
 	</ul>
 	<h2>{% gettext searchboxes-landlords-header_1 %}</h2>
 	<p>{% gettext searchboxes-landlords-paragraph_1 %}</p>

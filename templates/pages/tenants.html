@@ -6,6 +6,7 @@
 
 {% block real_content_id %}tenants{% endblock %}
 
+{% load element_translator %}
 {% block real_content %}
 
 <div id="map" class="single">
@@ -20,7 +21,7 @@
 	
 </div>
 
-{% include "elements/our_staff.html" %}
+{% include "elements/reusable/our_staff.html" %}
 
 {% endblock %}
 

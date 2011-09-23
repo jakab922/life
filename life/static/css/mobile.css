@@ -1,5 +1,4 @@
-/*--------- VARIABLES
------------------------------------*/
+
 /*--------- MAIN LAYOUT
 -----------------------------------*/
 body {
@@ -86,7 +85,7 @@ body {
 .topnav_mobile ul li {
   display: block;
   float: left;
-  margin: 0 0 0 21px;
+  margin: 0 10px 0 11px;
   padding: 10px 7px 0 7px;
   cursor: pointer;
 }
@@ -101,7 +100,7 @@ body {
 ul.nav_mobile {
   display: block;
   width: 300px;
-  margin: 15px auto 0 auto;
+  margin: 0 auto 0 auto;
   text-align: center;
   overflow: hidden;
 }
@@ -181,10 +180,18 @@ form#nav_mobile_search .button_1, form#nav_mobile_search .button_2 {
   padding-top: 10px;
 }
 /*--------- FEATURED SECTION
------------------------------------*/#feature, .about #feature {
-  width: 320px;
+-----------------------------------*/
+#feature, .about #feature {
+  width: 300px;
   margin: 0 auto;
 }
+
+.about_intro {
+	width: 300px;
+	margin: 0 auto;
+	padding:0;
+}
+
 .about_intro .col1 {
   margin-left: 0;
   margin-bottom: 10px;
@@ -196,6 +203,8 @@ form#nav_mobile_search .button_1, form#nav_mobile_search .button_2 {
 .about_intro .col2 {
   min-height: 0;
   padding-bottom: 20px;
+	width: 300px;
+	margin-left: 0;
 }
 #feature img {
   width: 320px;
@@ -203,13 +212,13 @@ form#nav_mobile_search .button_1, form#nav_mobile_search .button_2 {
 /*--------- SEGMENTS
 -----------------------------------*/
 #segments {
-  width: 320px;
+  width: 300px;
   margin: 0 auto;
   padding: 0;
 }
 #segments .col {
   float: none;
-  width: 320px;
+  width: 300px;
   padding-top: 10px;
 }
 #segments .col h2 {
@@ -222,8 +231,9 @@ form#nav_mobile_search .button_1, form#nav_mobile_search .button_2 {
   font-weight: bold;
 }
 /*--------- PROPERTY PORTAL LOGOS
------------------------------------*/#portals {
-  width: 320px;
+-----------------------------------*/
+#portals {
+  width: 300px;
   margin: 0 auto;
   padding: 0;
 }
@@ -237,7 +247,7 @@ form#nav_mobile_search .button_1, form#nav_mobile_search .button_2 {
 #portals div#portal_matrix {
   margin: 0;
   margin-top: 10px;
-  width: 320px;
+  width: 300px;
   min-height: 300px;
   padding: 0;
 }
@@ -251,15 +261,28 @@ form#nav_mobile_search .button_1, form#nav_mobile_search .button_2 {
   display: none;
 }
 /*--------- ABOUT US SECTION
------------------------------------*/#aboutus {
+-----------------------------------*/
+#aboutus {
   width: 320px;
   margin: 0 auto;
 }
+
+ol.carousel-tabs {
+	left: 40%;
+}
+
+ol.carousel-tabs li {
+	margin-right: 2px;
+}
+
 #mobile_related_links {
   padding-bottom: 20px;
   margin-bottom: 20px;
   border-bottom: 1px solid #d6d6d6;
   display: block;
+	width: 300px;
+	margin: 0 auto;
+	padding-top: 10px;
 }
 #tenants #mobile_related_links {
   border: 0;
@@ -287,18 +310,35 @@ form#nav_mobile_search .button_1, form#nav_mobile_search .button_2 {
 .tenants.buyers .map_description.col2 {
   padding-bottom: 20px;
 }
+/* CURRENCY EXCHANGE */
+.currency_exchange .col1 ul {
+	width: 290px;
+}
+
 /*--------- OUR STAFF
 -----------------------------------*/
 #our_staff, .page #our_staff {
-  width: 320px;
+  width: 300px;
   padding: 0;
-  margin-left: 0;
   padding-bottom: 10px;
+padding-top: 10px;
 margin:0 auto;
 }
 #our_staff h3 {
   font-size: 1.2em;
 }
+
+#our_staff div {
+	margin-right: 0;
+	padding:0;
+	margin-left:0;
+	width: 137px;
+}
+
+#our_staff div:nth-child(odd) {
+	margin-right: 26px;
+}
+
 #our_staff span.name {
   margin-bottom: 0;
 }
@@ -307,15 +347,24 @@ margin:0 auto;
   padding-top: 10px;
   margin-bottom: 10px;
 }
+
+#our_staff p {
+	margin-bottom: 0;
+}
+
+#our_staff {
+	float:none;
+}
 /*--------- FAQ SECTION
 -----------------------------------*/#faq {
   display: none;
 }
 /*--------- SEARCH RESULT BAR TOP & BOTTOM
------------------------------------*/.result_bar {
+-----------------------------------*/
+.result_bar {
   padding: 30px 0 0 0;
-  width: 320px;
-  margin: 0 10px;
+  width: 300px;
+  margin: 0 auto;
 }
 .result_bar.lower {
   margin: 0 auto;
@@ -336,14 +385,14 @@ margin:0 auto;
   margin-bottom: 10px;
 }
 .result_bar div.pagination {
-  width: 320px;
+  width: 300px;
   padding: 10px 0 0 0;
   border-top: 1px solid #d6d6d6;
   font-size: 1.2em;
   font-weight: bold;
 }
 .result_bar div.pagination ul li {
-  margin-right: 15px;
+  margin-right: 12px;
 }
 .result_bar div.pagination ul li:last-child {
   margin-right: 0;
@@ -359,7 +408,7 @@ margin:0 auto;
   font-size: 1.2em;
   font-weight: bold;
 }
-.result_bardiv.results_num {
+.result_bar div.results_num {
   display: block;
   width: 320px;
   border-bottom: 1px solid #d6d6d6;
@@ -473,23 +522,41 @@ margin:0 auto;
 /*--------- MAP SECTION
 -----------------------------------*/
 #map {
-  width: 320px;
+  width: 300px;
   margin: 0 auto;
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
+
+.detail .row {
+	width: 300px;
+	margin:0 auto;
+}
+
+#detail .col2 {
+	width: 150px;
+}
+
+#detail .col3 {
+	width: 60px;
+}
+
 #map.single {
   padding-bottom: 0;
 }
 #map img {
-  width: 320px;
-}
-#map .tabs {
-  overflow: hidden;
-}
-.detail #map img {
   width: 300px;
 }
+#map ul.tabs {
+  overflow: hidden;
+}
+
+#map ul.tabs li {
+	width: 60px;
+	font-size: 1em;
+	padding: 5px;
+}
+
 #map ul.thumbnails {
   display: none;
 }
@@ -503,6 +570,11 @@ margin:0 auto;
   margin-left: 0;
   margin-top: 10px;
 }
+
+.map_description.col1 {
+	width: 290px;
+}
+
 /*--------- TENANTS/LANDLORDS PAGES
 -----------------------------------*/
 .tenants .map_description.col1 {
@@ -512,8 +584,8 @@ margin:0 auto;
   width: 300px;
 }
 .landlords .row {
-  width: 320px;
-  margin-left: 0;
+  width: 300px;
+  margin: 0 auto;
 }
 .landlords .row div {
   margin-left: 0;
@@ -534,13 +606,9 @@ margin:0 auto;
   padding-top: 10px;
   padding-bottom: 10px;
   border-top: 1px solid #d6d6d6;
-  width: 320px;
-  margin-left: 0;
+  width: 300px;
 }
-.landlords #row2 {
-  margin-left: 0;
-  padding: 5px 0;
-}
+
 .landlords #row2 #col1 {
   padding: 10px 0;
   min-height: 0;
@@ -555,6 +623,17 @@ margin:0 auto;
 .landlords .row div:first-child {
   border: 0;
 }
+
+.landlords #row3 {
+	width: 300px;
+	margin: 0 auto;
+}
+
+.landlords #row3 ul,
+.landlords #row3 p {
+	width: 290px;
+}
+
 .faq .button_2 {
   margin-left: 0;
 }
@@ -562,21 +641,43 @@ margin:0 auto;
   width: 100%;
 }
 /*--------- STAFF PAGE
------------------------------------*/.feature_section .staff_feature:last-child {
+-----------------------------------*/
+.feature_section {
+	width: 300px;
+	margin: 0 auto;
+}
+
+.feature_section img {
+	width: 300px;
+}
+
+.feature_section .staff_feature:last-child {
   margin-left: 0;
   margin-top: 10px;
 }
 .feature_section h3, .feature_section div p, .feature_section a {
   margin-left: 0;
+	width: 290px;
 }
 .entry {
-  margin-left: 0;
+  width: 300px;
+margin: 0 auto;
   margin-bottom: 20px;
 }
 .entry .entry_header div:last-child {
   margin-left: 0;
   margin-top: 10px;
 }
+
+.entry_detail {
+	padding-top: 10px;
+}
+
+.entry_detail .col2 a {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
 #sharebar {
   display: none;
 }
@@ -639,11 +740,14 @@ margin:0 auto;
 .result_bar.detail {
   display: none;
 }
+
+/* -------------------- FAQ ------------------*/
+
 /*--------- TESTIMONIALS SECTION
 -----------------------------------*/#testimonials {
   width: 300px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 #testimonials div {
   margin-bottom: 20px;
@@ -652,13 +756,14 @@ margin:0 auto;
   display: none;
 }
 /*--------- LOGOS SECTION
------------------------------------*/#logos {
-  width: 320px;
+-----------------------------------*/
+#logos {
+  width: 300px;
   margin: 0 auto;
   padding-left: 0;
 }
 #logos img {
-  height: 30px;
+  height: 25px;
 }
 #logos ul li {
   margin: 0;
@@ -698,10 +803,10 @@ margin:0 auto;
   width: 100%;
 }
 #footer_top, #footer_bottom {
-  width: 320px;
+  width: 300px;
   margin: 0 auto;
   overflow: hidden;
-  padding: 15px 0;
+  padding: 10px 0;
   border: 0;
 }
 #footer .topnav_mobile ul li a {
@@ -720,7 +825,7 @@ margin:0 auto;
 }
 #footer_top div#footer_col4, #footer_top div#footer_col5 {
   float: none;
-  width: 320px;
+  width: 300px;
   margin: 0 auto;
   display: block;
 }
@@ -754,7 +859,7 @@ margin:0 auto;
 }
 #footer_col4 ul li:first-child {
   border-right: 1px solid #555555;
-  margin-left: 55px;
+  margin-left: 30px;
 }
 #footer_bottom {
   padding: 10px 0;
@@ -764,4 +869,78 @@ margin:0 auto;
 }
 #footer_bottom p:last-child {
   display: none;
+}
+/* Landscape mode only */
+@media only screen and (orientation:landscape) {
+	#header,
+	#topbar,
+	#content,
+	#footer,
+	#topbar_inner,
+	#topbar_1,
+	.topnav_mobile,
+	.topnav_mobile ul,
+	#aboutus,
+	.result_bar.guide,
+	.result_bar.guide ul,
+	#search_results .result,
+	.tenants .map_description.col1,
+	#picture_row .row_header {
+		width: 480px;
+	}
+	
+	.topnav_mobile ul li {
+		font-size: 1.3em;
+		margin-left: 40px;
+	}
+	
+	ul.nav_mobile {
+		font-size: 1.3em;
+	}
+	
+	ul.nav_mobile li {
+		width: 153px;
+	}
+
+ul.nav_mobile,
+#feature, .about #feature,
+.about_intro,
+.about_intro .col2,
+#segments,
+#segments .col,
+#segments .col p,
+#portals,
+#portals div#portal_matrix,
+#mobile_related_links,
+#mainbody .about_intro p,
+.tenants.buyers .map_description.col1 p,
+#our_staff, .page #our_staff,
+.result_bar,
+.result_bar div.pagination,
+#map,
+.detail .row,
+#feature img,
+#map img,
+.tenants .map_description.col1 p,
+.landlords .row,
+.landlords #row1.row div,
+.landlords #row3,
+.feature_section,
+.feature_section img,
+.entry,
+.detail #row3 ul, #detail #row3 p,
+.detail #row4,
+#testimonials,
+#logos,
+#contact_modal #contact,
+#contact_modal #contact fieldset,
+#contact_modal #contact fieldset.message div.forms,
+#contact_modal #contact fieldset.message div.forms div,
+#contact_modal #contact fieldset.message div.forms div.interests,
+#footer_top, #footer_bottom,
+#footer_top div#footer_col4, #footer_top div#footer_col5 {
+	width: 460px;
+}
+
+	
 }
