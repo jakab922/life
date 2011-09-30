@@ -1,31 +1,250 @@
 <!-- TODO: Translation is needed and it should be generated from a django form. -->
 <!-- TODO: Alert box should be droppable. -->
-{% load element_translator %}
-<form id="search">
+{% load element_translator coffeescript %}
+<form id="search" action="/{{ curr_lang_code }}/search/" method="post">
+	{% csrf_token %} 
 	<h2>{% gettext searchboxes-form-header %}</h2>
 	<fieldset id="fieldset_1">
-		{% gettext searchboxes-radio-Renting %} <input type="radio" name="customer_type" value="renting" checked="">
-		{% gettext searchboxes-radio-Buying %} <input type="radio" name="customer_type" value="buying">
+		{% gettext searchboxes-radio-Renting %} <input type="radio" name="sale_type" value="R" checked="">
+		{% gettext searchboxes-radio-Buying %} <input type="radio" name="sale_type" value="S">
 		
-		<label for="location">{% gettext searchboxes-form-location_label %}</label>
-		<input type="text" name="location" placeholder="{% gettext searchboxes-form-location_placeholder %}">
+		<label for="district">{% gettext searchboxes-form-location_label %}</label>
+		<input type="text" name="district" placeholder="{% gettext searchboxes-form-location_placeholder %}">
 		<p>{% gettext searchboxes-form-area_guide_paragraph %}</p>
 	</fieldset>
 	<fieldset id="fieldset_2">
 		<label for="property_type">{% gettext searchboxes-form-property_type_label %}</label>
-		<select name="property_type" class="property_type">
-			<option value="any">Any</option> <!-- TODO: This should be generated automatically. -->
+		<select name="type" class="property_type">
+			{% for code, name in searchform_types %}
+				{% if code == 'NA' %}
+					<option selected="selected" value="{{ code }}">{% gettext searchboxes-form-Any %}</option>
+				{% else %}
+					<option value="{{ code }}">{{ name }}</option>
+				{% endif %}
+			{% endfor %}
 		</select>
 		
 		<label for="price">{% gettext searchboxes-form-price_label %}</label>
-		{% gettext searchboxes-form-From %} <select name="min_price"><option value="min">min</option></select>
-		{% gettext searchboxes-form-To %} <select name="max_price"><option value="max">max</option></select>
+		{% gettext searchboxes-form-From %} 
+		<select id="min_price-select" name="min_price">
+				<option selected="selected" value="0">{% gettext searchboxes-form-min %}</option>
+				{% for num in rentals_min_prices %}
+					<option value="{{ num }}">{{ num }}</option>
+				{% endfor %}
+		</select>
+		{% gettext searchboxes-form-To %} 
+		<select id="max_price-select" name="max_price">
+			<option selected="selected" value="9999999999">{% gettext searchboxes-form-max %}</option>
+			{% for num in rentals_max_prices %}
+				{% if forloop.last %}
+				<option value="9999999999">{{ num }}+</option>
+				{% else %}
+				<option value="{{ num }}">{{ num }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>
 		
 		<label for="number_of_bedrooms">{% gettext searchboxes-form-bedroom_label %}</label>
-		{% gettext searchboxes-form-From %} <select name="min_bedrooms"><option value="min">min</option></select>
-		{% gettext searchboxes-form-To %} <select name="max_bedrooms"><option value="max">max</option></select>
+		{% gettext searchboxes-form-From %} 
+		<select id="min_bedrooms-select" name="min_bedrooms">
+			<option selected="selected" value="0">{% gettext searchboxes-form-min %}</option>
+			{% for num in min_bedrooms %}
+				<option value="{{ num }}">{{ num }}</option>
+			{% endfor %}
+		</select>
+		{% gettext searchboxes-form-To %} 
+		<select id="max_bedrooms-select" name="max_bedrooms">
+			<option selected="selected" value="9999999999">{% gettext searchboxes-form-max %}</option>
+			{% for num in max_bedrooms %}
+				{% if forloop.last %}
+				<option value="9999999999">{{ num }}+</option>
+				{% else %}
+				<option value="{{ num }}">{{ num }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>
 		
-		<a href="/{{ curr_lang_code }}/search/" class="button_2">{% gettext searchbox-form-search_button %}</a>
+		<input type="submit" class="button_2" value="{% gettext searchbox-form-search_button %}">
 	</fieldset>
 	<a href="#" class="button_1 alert_box"><img src="{{ STATIC_URL }}images/alert_icon.png" alt="{% gettext searchboxes-form-email_alert %}">{% gettext searchboxes-form-email_alert %}</a>
 </form> <!-- end of: search -->
+<div id="dropped_min_prices" style="display: none"></div>
+<div id="dropped_max_prices" style="display: none"></div>
+
+<div id="dropped_min_bedrooms" style="display: none"></div>
+<div id="dropped_max_bedrooms" style="display: none"></div>
+<script type="text/javascript" charset="utf-8">
+	var min_trans = '{% gettext searchboxes-form-min %}';
+	var max_trans = '{% gettext searchboxes-form-max %}';
+	var sale_type = 'R';
+
+	var sales_min_prices = [];
+	var sales_max_prices = []; 
+	var rentals_min_prices = [{% for num in rentals_min_prices %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}];
+	var rentals_max_prices = [{% for num in rentals_max_prices %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}];
+	
+	var min_bedrooms = [{% for num in min_bedrooms %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}];
+	var max_bedrooms = [{% for num in max_bedrooms %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}];
+	
+	function wait (millis) {
+		var date = new Date();
+		var curDate = null;
+
+		do { curDate = new Date(); } 
+		while(curDate-date < millis);
+	}
+	
+	$('#min_price-select').change(function() {
+		// Removing min from the enabled options if it's there
+		$('#min_price-select option:contains("' + min_trans + '")').remove();
+		
+		// Removing the elements from max list where they are smaller than the current selected element in the min  list.
+		var curr_min_val = parseInt($("#min_price-select option:selected").attr("value"));
+		
+		
+		console.log($('#max_price-select option').not(":contains('" + max_trans + "')").filter(function (index) { return $(this).attr('value') <= curr_min_val; }));
+		$('#max_price-select option').not(":contains('" + max_trans + "')").filter(function (index) { 
+			return $(this).attr('value') <= curr_min_val; 
+		}).each(function () {
+			$('#dropped_max_prices').append($(this)); 
+		});
+		
+		// Reinserting elements which again became larger than the current minimum value.
+		var max_select;
+		if($('#max_price-select option:selected').text() == max_trans) {
+			max_select = $('#max_price-select option:selected');
+		} else {
+			max_select = $('#max_price-select');
+		}
+		
+		$($('#dropped_max_prices option').get().reverse()).each(function () {
+			if($(this).text() != max_trans && $(this).attr('value') > curr_min_val) {
+				if(max_select.attr('selected')) {
+					max_select.after($(this));
+				} else {
+					max_select.prepend($(this));
+				}
+				
+			}
+		});
+	});
+	
+	$('#max_price-select').change(function() {
+		// Removing max from the enabled options if it's there
+		$('#max_price-select option:contains("' + max_trans + '")').remove();
+		
+		// Removing the elements from min list where they are smaller than the current selected element in the max list.
+		var curr_max_val = parseInt($("#max_price-select option:selected").attr("value"));
+		
+		$('#min_price-select option').not(":contains('" + min_trans + "')").filter(function (index) {
+			return $(this).attr('value') >= curr_max_val;
+		}).each(function () {
+			$('#dropped_min_prices').append($(this));
+		});
+		
+		// Reinserting elements which again became larger than the current minimum value.
+		$($('#dropped_min_prices option').get().reverse()).filter(function  (index) {
+			return $(this).text() != min_trans && $(this).attr('value') < curr_max_val;
+		}).each(function () {
+			$('#min_price-select').append($(this));
+		});
+	});
+	
+	$('#min_bedrooms-select').change(function() {
+		var content = '';
+		var curr_max_val = parseInt($("#max_bedrooms-select option:selected").attr("value"));
+		var curr_min_val = parseInt($("#min_bedrooms-select option:selected").attr("value"));
+		var max_true;
+		
+		$('#min_bedrooms-select option:contains("min")').remove()
+		
+		if($("#max_bedrooms-select option:selected").text() == max_trans) {
+			max_true = true;
+			content += '<option selected="selected" value="9999999999">' + max_trans + '</option>';
+		} else {
+			max_true = false;
+		}
+		
+		
+		for(var i = 0; i < max_bedrooms.length; i++) {
+			if(max_bedrooms[i] > curr_min_val) {
+				if(i == max_bedrooms.length - 1) {
+					if(9999999999 == curr_max_val && max_true == false) {
+						content += '<option selected="selected" value="9999999999">' + max_bedrooms[i] + '+</option>';
+					} else {
+						content += '<option value="9999999999">' + max_bedrooms[i] + '+</option>';
+					}
+				} else {
+					if (max_bedrooms[i] == curr_max_val && max_true == false) {
+						content += '<option selected="selected" value="' + max_bedrooms[i] + '" >' + max_bedrooms[i] + '</option>';
+					} else {
+						content += '<option value="' + max_bedrooms[i] + '" >' + max_bedrooms[i] + '</option>';
+					}
+				}
+			}
+		}
+		$('#max_bedrooms-select').html(content);
+	});
+	
+	$('#max_bedrooms-select').change(function() {
+		var content = '';
+		var curr_max_val = parseInt($("#max_bedrooms-select option:selected").attr("value"));
+		var curr_min_val = parseInt($("#min_bedrooms-select option:selected").attr("value"));
+		var min_true;
+		
+		$('#max_bedrooms-select option:contains("max")').remove()
+		
+		if($("#min_bedrooms-select option:selected").text() == min_trans) {
+			min_true = true;
+			content += '<option selected="selected" value="0">' + min_trans + '</option>';
+		} else {
+			min_true = false;
+		}
+		
+		for(var i = 0; i < min_bedrooms.length; i++) {
+			if(min_bedrooms[i] < curr_max_val) {
+				if (min_bedrooms[i] == curr_min_val && min_true == false) {
+					content += '<option selected="selected" value="' + min_bedrooms[i] + '" >' + min_bedrooms[i] + '</option>';
+				} else {
+					content += '<option value="' + min_bedrooms[i] + '" >' + min_bedrooms[i] + '</option>';
+				}
+			}
+		}
+		$('#min_bedrooms-select').html(content);
+	});
+	
+	$("input[name='sale_type']").change(function(){
+		var min_content = '<option selected="selected" value="0">min</option>';
+		var max_content = '<option selected="selected" value="9999999999">max</option>';
+		
+		if($("input[name='sale_type']:checked").val() == 'S') {
+			sale_type = 'S';
+			for(var i = 0; i < sales_min_prices.length; i++) {
+				min_content += '<option value="' + sales_min_prices[i] + '" >' + sales_min_prices[i] + '</option>';
+			}
+			for(var i = 0; i < sales_max_prices.length; i++) {
+				if(i == sales_max_prices.length - 1) {
+					max_content += '<option value="9999999999" >' + sales_max_prices[i] + '</option>';
+				} else {
+					max_content += '<option value="' + sales_max_prices[i] + '" >' + sales_max_prices[i] + '</option>';
+				}
+				
+			}
+		} else {
+			sale_type = 'R';
+			for(var i = 0; i < rentals_min_prices.length; i++) {
+				min_content += '<option value="' + rentals_min_prices[i] + '" >' + rentals_min_prices[i] + '</option>';
+			}
+			for(var i = 0; i < rentals_max_prices.length; i++) {
+				if(i == rentals_max_prices.length - 1) {
+					max_content += '<option value="9999999999" >' + rentals_max_prices[i] + '</option>';
+				} else {
+					max_content += '<option value="' + rentals_max_prices[i] + '" >' + rentals_max_prices[i] + '</option>';
+				}
+				
+			}
+		}
+		$('#min_price-select').html(min_content);
+		$('#max_price-select').html(max_content);
+	});
+</script>

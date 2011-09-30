@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from models import *
+from random import shuffle
 
 def generate_base_dict(lang_code, pagename):
 	languages = [(langobj.lang_code, langobj.lang) for langobj in Language.objects.all()]
@@ -14,6 +15,30 @@ def generate_base_dict(lang_code, pagename):
 	return {'pagename': pagename, 'curr_lang_code': lang_code, 'curr_lang': Language.objects.filter(lang_code = lang_code)[0].lang, 'curr_flag': Language.objects.filter(lang_code = lang_code)[0].flag, 'languages': languages}
 	
 
+def add_searchform(template_dict):
+	# TODO: should change after adding translations and shit...
+	template_dict['searchform_types'] = type_choices
+	
+	template_dict['sales_min_prices'] = [25000 * i for i in range(1,17)] + [450000] + [i * 100000 for i in range(5,10)]
+	template_dict['sales_max_prices'] = [25000 * i for i in range(2,17)] + [450000] + [i * 100000 for i in range(5,10)] + [1000000]
+	template_dict['rentals_min_prices'] = [250 * i for i in range(1,9)] + [500 * i for i in range(5,10)]
+	template_dict['rentals_max_prices'] = [250 * i for i in range(2,9)] + [500 * i for i in range(5,10)] + [5000]
+	
+	template_dict['min_bedrooms'] = [i for i in range(7)]
+	template_dict['max_bedrooms'] = [i for i in range(1,8)]
+	
+	return template_dict
+	
+def add_testimonials(template_dict):
+	template_dict['testimonials'] = [(t.testimonial.name, t.testimonial.date, t.quote) for t in TestimonialTranslation.objects.filter(language__lang_code = template_dict['curr_lang_code'])]
+	
+	return template_dict
+	
+def add_staff(template_dict):
+	template_dict['staff'] = StaffMember.objects.all()
+
+	return template_dict
+	
 def landlord_services(request, service_name, lang_code):
 	if service_name not in ['property_management', 'tax_advice', 'furnishing', 'client_info', 'engagement_terms']:
 		service_name = 'landlord_services' # put base in list and redirect to base if not in list...
@@ -54,8 +79,8 @@ def city_guide(request, area, lang_code):
 	else:
 		template_dict['container_class'] = 'page guide area'
 		
-	template_dict['four_element'] = range(1,5)
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_staff(template_dict)
+	template_dict = add_testimonials(template_dict)
 		
 	return render_to_response('pages/city_guide.html', template_dict, context_instance = RequestContext(request))
 
@@ -84,8 +109,8 @@ def about_us(request, subpage, lang_code):
 	if subpage != 'our_staff':
 		template_dict['slider_images'] = ['images/about_image.jpg', 'images/about_image_2.jpg', 'images/about_image.jpg', 'images/about_image_2.jpg']
 		
-	template_dict['four_element'] = range(1,5)
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_staff(template_dict)
+	template_dict = add_testimonials(template_dict)
 	if subpage == 'our_staff':
 		template_dict['offices'] = [OfficeDummy(range(1,3)) for i in range(2)]
 	
@@ -94,8 +119,9 @@ def about_us(request, subpage, lang_code):
 def index(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/')
 	
-	template_dict['four_element'] = [1,2,3,4]
-	template_dict['three_element'] = [1,2,3]
+	template_dict = add_searchform(template_dict)
+	template_dict = add_staff(template_dict)
+	template_dict = add_testimonials(template_dict)
 	
 	return render_to_response('pages/index.html', template_dict, context_instance = RequestContext(request))
 	
@@ -104,9 +130,16 @@ def to_english(request):
 	
 def search(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/search/')
+	if request.method == 'POST':
+		print 'posted'
+		print request.POST
+		print Property.objects.filter(district__name__startswith = request.POST['district'])
+	else:
+		print 'not posted'
 	
+	template_dict = add_searchform(template_dict)
 	template_dict['search_results'] = range(7)
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_testimonials(template_dict)
 	
 	return render_to_response('pages/search.html', template_dict, context_instance = RequestContext(request))
 	
@@ -114,52 +147,56 @@ def landlords(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/landlords/')
 	
 	template_dict['previous_developments'] = [TestimonialDummy('/images/prev_dev_thumb1.jpg', 'Cadwell House, London SW13') for i in range(3)]
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_testimonials(template_dict)
 	
 	return render_to_response('pages/landlords.html', template_dict, context_instance = RequestContext(request))
 	
 def tenants(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/tenants/')
 	
-	template_dict['four_element'] = range(1,5)
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_searchform(template_dict)
+	template_dict = add_staff(template_dict)
+	template_dict = add_testimonials(template_dict)
 	
 	return render_to_response('pages/tenants.html', template_dict, context_instance = RequestContext(request))
 
 def buyers(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/buyers/')
 
-	template_dict['four_element'] = range(1,5)
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_searchform(template_dict)
+	template_dict = add_staff(template_dict)
+	template_dict = add_testimonials(template_dict)
 
 	return render_to_response('pages/buyers.html', template_dict, context_instance = RequestContext(request))
 
 def corporate(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/corporate/')
 
-	template_dict['four_element'] = range(1,5)
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_searchform(template_dict)
+	template_dict = add_staff(template_dict)
+	template_dict = add_testimonials(template_dict)
 
 	return render_to_response('pages/corporate.html', template_dict, context_instance = RequestContext(request))
 	
 def currency_exchange(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/currency_exchange/')
 
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_searchform(template_dict)
+	template_dict = add_testimonials(template_dict)
 
 	return render_to_response('pages/corporate.html', template_dict, context_instance = RequestContext(request))
 	
 def faq(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/faq/')
 	
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_testimonials(template_dict)
 
 	return render_to_response('pages/faq.html', template_dict, context_instance = RequestContext(request))
 	
 def detail(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/detail/')
 	
-	template_dict['three_element'] = range(1,4)
+	template_dict = add_testimonials(template_dict)
 	
 	return render_to_response('pages/detail.html', template_dict, context_instance = RequestContext(request))
 

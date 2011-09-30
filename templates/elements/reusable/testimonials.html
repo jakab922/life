@@ -1,12 +1,10 @@
-<!-- TODO: Add translations and generate this part from the Testimonial model. -->
 {% load element_translator %}
 <div id="testimonials">
-	<!-- TODO: Put this in a form cycle somehow -->
-	{% for i in three_element %}
+	{% for t in testimonials %}
 		<div class="testimonial" id="testimonial_{{ forloop.counter }}">
-			<p>“Lorraine, what an efficiency!! Really appreciated the prompt reply, I know I shall be in good hands.”</p>
-			<cite>Alex Lam, May 2001</cite>
-		</div> <!-- end of: testimonial_1 -->
+			<p>“{{ t.2 }}”</p>
+			<cite>{{ t.0 }}, {{ t.1|date:"M Y" }}</cite>
+		</div> <!-- end of: testimonial_{{ forloop.counter }} -->
 	{% endfor %}
 	<a href="">{% gettext reusable-testimonials-read_more %} &gt;</a>
 </div> <!-- end of: testimonials -->
