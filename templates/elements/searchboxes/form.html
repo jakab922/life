@@ -1,6 +1,6 @@
 <!-- TODO: Translation is needed and it should be generated from a django form. -->
 <!-- TODO: Alert box should be droppable. -->
-{% load element_translator coffeescript %}
+{% load element_translator %}
 <form id="search" action="/{{ curr_lang_code }}/search/" method="post">
 	{% csrf_token %} 
 	<h2>{% gettext searchboxes-form-header %}</h2>
@@ -78,8 +78,8 @@
 	var max_trans = '{% gettext searchboxes-form-max %}';
 	var sale_type = 'R';
 
-	var sales_min_prices = [];
-	var sales_max_prices = []; 
+	var sales_min_prices = [{% for num in sales_min_prices %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}];
+	var sales_max_prices = [{% for num in sales_max_prices %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}]; 
 	var rentals_min_prices = [{% for num in rentals_min_prices %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}];
 	var rentals_max_prices = [{% for num in rentals_max_prices %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}];
 	
@@ -101,8 +101,6 @@
 		// Removing the elements from max list where they are smaller than the current selected element in the min  list.
 		var curr_min_val = parseInt($("#min_price-select option:selected").attr("value"));
 		
-		
-		console.log($('#max_price-select option').not(":contains('" + max_trans + "')").filter(function (index) { return $(this).attr('value') <= curr_min_val; }));
 		$('#max_price-select option').not(":contains('" + max_trans + "')").filter(function (index) { 
 			return $(this).attr('value') <= curr_min_val; 
 		}).each(function () {
@@ -151,66 +149,58 @@
 	});
 	
 	$('#min_bedrooms-select').change(function() {
-		var content = '';
-		var curr_max_val = parseInt($("#max_bedrooms-select option:selected").attr("value"));
+		// Removing min from the enabled options if it's there
+		$('#min_bedrooms-select option:contains("' + min_trans + '")').remove();
+		
+		// Removing the elements from max list where they are smaller than the current selected element in the min  list.
 		var curr_min_val = parseInt($("#min_bedrooms-select option:selected").attr("value"));
-		var max_true;
 		
-		$('#min_bedrooms-select option:contains("min")').remove()
 		
-		if($("#max_bedrooms-select option:selected").text() == max_trans) {
-			max_true = true;
-			content += '<option selected="selected" value="9999999999">' + max_trans + '</option>';
+		$('#max_bedrooms-select option').not(":contains('" + max_trans + "')").filter(function (index) { 
+			return $(this).attr('value') <= curr_min_val; 
+		}).each(function () {
+			$('#dropped_max_bedrooms').append($(this)); 
+		});
+		
+		// Reinserting elements which again became larger than the current minimum value.
+		var max_select;
+		if($('#max_bedrooms-select option:selected').text() == max_trans) {
+			max_select = $('#max_bedrooms-select option:selected');
 		} else {
-			max_true = false;
+			max_select = $('#max_bedrooms-select');
 		}
 		
-		
-		for(var i = 0; i < max_bedrooms.length; i++) {
-			if(max_bedrooms[i] > curr_min_val) {
-				if(i == max_bedrooms.length - 1) {
-					if(9999999999 == curr_max_val && max_true == false) {
-						content += '<option selected="selected" value="9999999999">' + max_bedrooms[i] + '+</option>';
-					} else {
-						content += '<option value="9999999999">' + max_bedrooms[i] + '+</option>';
-					}
+		$($('#dropped_max_bedrooms option').get().reverse()).each(function () {
+			if($(this).text() != max_trans && $(this).attr('value') > curr_min_val) {
+				if(max_select.attr('selected')) {
+					max_select.after($(this));
 				} else {
-					if (max_bedrooms[i] == curr_max_val && max_true == false) {
-						content += '<option selected="selected" value="' + max_bedrooms[i] + '" >' + max_bedrooms[i] + '</option>';
-					} else {
-						content += '<option value="' + max_bedrooms[i] + '" >' + max_bedrooms[i] + '</option>';
-					}
+					max_select.prepend($(this));
 				}
+				
 			}
-		}
-		$('#max_bedrooms-select').html(content);
+		});
 	});
 	
 	$('#max_bedrooms-select').change(function() {
-		var content = '';
+		// Removing max from the enabled options if it's there
+		$('#max_bedrooms-select option:contains("' + max_trans + '")').remove();
+		
+		// Removing the elements from min list where they are smaller than the current selected element in the max list.
 		var curr_max_val = parseInt($("#max_bedrooms-select option:selected").attr("value"));
-		var curr_min_val = parseInt($("#min_bedrooms-select option:selected").attr("value"));
-		var min_true;
 		
-		$('#max_bedrooms-select option:contains("max")').remove()
+		$('#min_bedrooms-select option').not(":contains('" + min_trans + "')").filter(function (index) {
+			return $(this).attr('value') >= curr_max_val;
+		}).each(function () {
+			$('#dropped_min_bedrooms').append($(this));
+		});
 		
-		if($("#min_bedrooms-select option:selected").text() == min_trans) {
-			min_true = true;
-			content += '<option selected="selected" value="0">' + min_trans + '</option>';
-		} else {
-			min_true = false;
-		}
-		
-		for(var i = 0; i < min_bedrooms.length; i++) {
-			if(min_bedrooms[i] < curr_max_val) {
-				if (min_bedrooms[i] == curr_min_val && min_true == false) {
-					content += '<option selected="selected" value="' + min_bedrooms[i] + '" >' + min_bedrooms[i] + '</option>';
-				} else {
-					content += '<option value="' + min_bedrooms[i] + '" >' + min_bedrooms[i] + '</option>';
-				}
-			}
-		}
-		$('#min_bedrooms-select').html(content);
+		// Reinserting elements which again became larger than the current minimum value.
+		$($('#dropped_min_bedrooms option').get().reverse()).filter(function  (index) {
+			return $(this).text() != min_trans && $(this).attr('value') < curr_max_val;
+		}).each(function () {
+			$('#min_bedrooms-select').append($(this));
+		});
 	});
 	
 	$("input[name='sale_type']").change(function(){

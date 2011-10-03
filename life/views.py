@@ -2,6 +2,8 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from models import *
 from random import shuffle
+from json import loads as parse_json
+from re import sub
 
 def generate_base_dict(lang_code, pagename):
 	languages = [(langobj.lang_code, langobj.lang) for langobj in Language.objects.all()]
@@ -131,11 +133,29 @@ def to_english(request):
 def search(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/search/')
 	if request.method == 'POST':
-		print 'posted'
-		print request.POST
-		print Property.objects.filter(district__name__startswith = request.POST['district'])
+		query_dict = {}
+
+		if 'shortlist' in request.POST:
+			print request.POST['shortlist_ids']
+			query_dict['property_id__in'] = parse_json(request.POST['shortlist_ids'])
+		else:
+			query_dict['sale_type'] = request.POST['sale_type']
+			query_dict['district__name__startswith'] = request.POST['district']
+			query_dict['type'] = request.POST['type']
+			query_dict['price__gte'] = request.POST['min_price']
+			query_dict['price__lte'] = request.POST['max_price']
+			query_dict['bed_count__gte'] = request.POST['min_bedrooms']
+			query_dict['bed_count__lte'] = request.POST['max_bedrooms']
+
+		print query_dict
+
+		template_dict['search_results'] = Property.objects.filter(**query_dict)[:7]
+		
+		# Gathering images for the properties
+		for i in range(len(search_results)):
+			template_dict['search_results'][i].images = [re.sub(r'(.*/)([^/]+)', r'\1searchpage/\2', j.image) for j in PropertyThumbnail.objects.filter(property__property_id = template_dict['search_results'][i].property_id)][:4]
 	else:
-		print 'not posted'
+		print Propert.objects.all().order_by('-property_id')[:7]
 	
 	template_dict = add_searchform(template_dict)
 	template_dict['search_results'] = range(7)

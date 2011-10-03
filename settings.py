@@ -1,8 +1,7 @@
 # Django settings for testsite project.
 import os
 
-ProjectDir = os.getcwd()
-print 'ProjectDir', ProjectDir
+ProjectDir = os.path.realpath(os.path.dirname(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -129,7 +128,6 @@ INSTALLED_APPS = (
 	'life',
 	'gunicorn',
 	'south',
-	'coffeescript',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

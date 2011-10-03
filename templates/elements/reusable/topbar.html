@@ -32,10 +32,12 @@
 					<!-- End of for cycle --> 
 				</form> 
 			</div> <!-- end of: language -->	
-			<div id="shortlist-link">
-				<!-- TODO: Make models and stuff like that for this -->
-				<a href="#">{% gettext topbar-View_your_shortlist %} (0) &gt;</a> 
-			</div> <!-- end of: shortlist-link -->
+			<form id="shortlist_form" action="/{{ curr_lang_code }}/search/" method="POST">
+				<input type="hidden" name="shortlist_ids"></input>
+				<input type="hidden" name="shortlist" value="true"></input>
+				<a href="#" id="shortlist-link">{% gettext topbar-View_Shortlist %} </a>
+				{% csrf_token %}
+			</form>
 		</div> <!-- end of: topbar_3 --> 
 	</div> <!-- end of: topbar_inner -->
 	
@@ -50,10 +52,31 @@
 				<a href="/{{ curr_lang_code }}/search/">{% gettext pageless-Property_search %}</a> 
 			</li> 
 			<li> 
-				<img src="{{ STATIC_URL }}images/mobile_nav_shortlist_icon.png" alt="shortlist"/> 
-				<a href="#">{% gettext topbar-View_Shortlist %} (0)</a> <!-- TODO: Auto generate the number of results. --> 
+				<img src="{{ STATIC_URL }}images/mobile_nav_shortlist_icon.png" alt="shortlist"/>
+				<form id="shortlist_form" action="/{{ curr_lang_code }}/search/" method="POST">
+					<input type="hidden" name="shortlist_ids"></input>
+					<input type="hidden" name="shortlist" value="true"></input>
+					<a href="#" >{% gettext topbar-View_Shortlist %} </a>
+					{% csrf_token %}
+				</form> 
+				
 			</li> 
 		</ul> 
 	</div> <!-- end of: topnav_mobile -->
 						
 </div> <!-- end of: topbar -->
+<script type="text/javascript">
+$(window).load(function () {
+	var shortlist_ids = [];
+	
+	if ($.cookie('shortlist_ids') != null) {
+		shortlist_ids = $.parseJSON($.cookie('shortlist_ids'));
+	}
+
+	$('#shortlist_form input[name="shortlist_ids"]').val('[' + shortlist_ids.join(', ') + ']');
+	$('#shortlist_form a').append('(' + shortlist_ids.length + ')' + ' &gt;');
+	$('#shortlist_form a').click(function () {
+		$(this).parent()[0].submit();
+	});
+});
+</script>

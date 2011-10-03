@@ -1,4 +1,4 @@
-$(function() {
+$(window).load(function() {
 	$('li.contact').click(function() {
 		$('#contact_modal').fadeIn();
 	});

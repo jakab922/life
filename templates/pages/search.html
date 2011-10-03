@@ -12,16 +12,19 @@
 
 {% block real_content %}
 <!-- TODO: Automatically generate this and create models for it. -->
-{% for search_result in search_results %}
+{% for result in search_results %}
 <div class="result">
 	<div class="result_image">
 		<img src="{{ STATIC_URL }}images/search_result_picture_1.jpg" alt="search result">
 		<div class="controls">
 			<ul>
-				<li class="selected"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
+				{% for image in result.images %}
+				{% if forloop.first %}
+				<li class="selected"><a href="#">{{ forloop.counter }}</a></li>
+				{% else %}
+				<li><a href="#">{{ forloop.counter }}</a></li>
+				{% endif %}
+				{% endfor %}
 			</ul>
 		</div>
 	</div>
@@ -43,6 +46,9 @@
 	</div>
 </div>
 {% endfor %}
+<script type="text/javascript">
+TODO: Need to add here the code that changes the images. So like onload function and stuff like that.
+</script>
 {% endblock %}
 
 {% block sidebar_content %}
