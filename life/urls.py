@@ -16,6 +16,6 @@ urlpatterns = patterns('',
 	url(r'^(?P<lang_code>[a-z]{2})/city_guide/(?P<area>[a-z_]+)/$', city_guide, name = 'city_guide'),
 	url(r'^(?P<lang_code>[a-z]{2})/currency_exchange/$', currency_exchange),
 	url(r'^(?P<lang_code>[a-z]{2})/faq/$', faq),
-	url(r'^(?P<lang_code>[a-z]{2})/detail/$', detail),
+	url(r'^(?P<lang_code>[a-z]{2})/detail/(?P<prop_id>[0-9]+)/$', detail),
 	url(r'^our_properties/$', direct_to_template, {'template': 'pages/our_properties.html'}, name = 'our_properties'),
 )

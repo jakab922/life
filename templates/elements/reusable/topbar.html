@@ -31,13 +31,10 @@
 					<img src="{{ MEDIA_URL }}{{ curr_flag }}" alt="{{ curr_lang }}" class="language" />
 					<!-- End of for cycle --> 
 				</form> 
-			</div> <!-- end of: language -->	
-			<form id="shortlist_form" action="/{{ curr_lang_code }}/search/" method="POST">
-				<input type="hidden" name="shortlist_ids"></input>
-				<input type="hidden" name="shortlist" value="true"></input>
-				<a href="#" id="shortlist-link">{% gettext topbar-View_Shortlist %} </a>
-				{% csrf_token %}
-			</form>
+			</div> <!-- end of: language -->
+			<div class="shortlist-link" id="shortlist-link" >
+				<a href="#">{% gettext topbar-View_Shortlist %} </a>
+			</div>
 		</div> <!-- end of: topbar_3 --> 
 	</div> <!-- end of: topbar_inner -->
 	
@@ -53,30 +50,52 @@
 			</li> 
 			<li> 
 				<img src="{{ STATIC_URL }}images/mobile_nav_shortlist_icon.png" alt="shortlist"/>
-				<form id="shortlist_form" action="/{{ curr_lang_code }}/search/" method="POST">
-					<input type="hidden" name="shortlist_ids"></input>
-					<input type="hidden" name="shortlist" value="true"></input>
-					<a href="#" >{% gettext topbar-View_Shortlist %} </a>
-					{% csrf_token %}
-				</form> 
-				
+				<a class="shortlist-link" href="#" >{% gettext topbar-View_Shortlist %} </a>
 			</li> 
 		</ul> 
 	</div> <!-- end of: topnav_mobile -->
 						
 </div> <!-- end of: topbar -->
 <script type="text/javascript">
-$(window).load(function () {
-	var shortlist_ids = [];
+var shortlist_ids = [];
+var csrf_pattern = /.*value='([a-z0-9]+)'.*/g
+var csrf_match = csrf_pattern.exec("{% csrf_token %}");
+var csrf_token = csrf_match[1]
+
+var submitter = function(action, list_name, list_value) {
+	var form = document.createElement("form");
+	form.setAttribute("method", "POST");
+	form.setAttribute("action", action);
+
+	var hidden = document.createElement('input');
+	hidden.setAttribute("type", "hidden");
+	hidden.setAttribute("name", list_name);
+	hidden.setAttribute("value", list_value);
+	form.appendChild(hidden);
+
+	var csrf = document.createElement('input');
+	csrf.setAttribute("type", "hidden");
+	csrf.setAttribute("name", "csrfmiddlewaretoken");
+	csrf.setAttribute("value", csrf_token);	
+	form.appendChild(csrf);
 	
+	form.submit();
+};
+
+$(window).load(function () {
+	// Adding the number of shortlist elements to it's link
 	if ($.cookie('shortlist_ids') != null) {
 		shortlist_ids = $.parseJSON($.cookie('shortlist_ids'));
 	}
 
-	$('#shortlist_form input[name="shortlist_ids"]').val('[' + shortlist_ids.join(', ') + ']');
-	$('#shortlist_form a').append('(' + shortlist_ids.length + ')' + ' &gt;');
-	$('#shortlist_form a').click(function () {
-		$(this).parent()[0].submit();
+	$('div.shortlist-link a').append('(' + shortlist_ids.length + ')' + ' &gt;');
+	$('a.shortlist-link').append('(' + shortlist_ids.length + ')' + ' &gt;');
+
+	// Adding the shortlist submission function
+	$('.shortlist-link').each(function () {
+		$(this).click(function () {
+			submitter("/{{ curr_lang_code}}/search/","shortlist_ids","[" + shortlist_ids.join(', ') + "]");
+		});
 	});
 });
 </script>

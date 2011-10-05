@@ -21,6 +21,46 @@
 
 </div> <!-- end of: header -->
 
+<script type="text/javascript">
+{% if property_ids %}
+var property_ids = {{ property_ids }};
+{% else %}
+var property_ids = [];
+{% endif %}
+var curr_property_id = {{ curr_property_id }};
+var curr_lang_code = '{{ curr_lang_code }}';
+
+$(window).load(function () {
+	if(property_ids.length == 0) {
+		console.log('bubba')
+		$('a.prev').css('visibility', 'hidden');
+		$('a.next').css('visibility', 'hidden');
+		$('a.back').css('visibility', 'hidden');
+	} else {
+		if(property_ids.indexOf(curr_property_id) == 0) {
+			$('a.prev').css('visibility', 'hidden');
+		} else {
+			$('a.prev').click(function () {
+				submitter('/' + curr_lang_code + '/detail/' + property_ids[property_ids.indexOf(curr_property_id) - 1] + '/', 'property_ids', "[" + property_ids.join(', ') + "]");	
+			});
+		}
+
+		if(property_ids.indexOf(curr_property_id) == property_ids.length - 1) {
+			$('a.next').css('visibility', 'hidden');
+		} else {
+			$('a.next').click(function () {
+				submitter('/' + curr_lang_code + '/detail/' + property_ids[property_ids.indexOf(curr_property_id) + 1] + '/', 'property_ids', "[" + property_ids.join(', ') + "]");
+			});
+		}
+
+		$('a.back').click(function () {
+			submitter("/{{ curr_lang_code}}/search/", "shortlist_ids", "[" + property_ids.join(', ') + "]");	
+		});
+	}
+});
+
+</script>
+
 {% endblock %}
 
 {% block real_content_id %}detail{% endblock %}
@@ -34,16 +74,42 @@
 	<div class="row" id="row1">
 	
 		<div id="map"><!-- TODO: These images shouldn't be stored in static since they will be uploaded via the admin interface. -->		
-			<img src="{{ STATIC_URL }}images/detail_image_1.jpg" alt="Detail Image">
+			<img id="big_image_1" src="{{ MEDIA_URL }}{{ big_images.0 }}" alt="Detail Image" >
 			<ul class="thumbnails">
-				<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_1.jpg" alt=""></a></li>
-				<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_2.jpg" alt=""></a></li>
-				<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_3.jpg" alt=""></a></li>
-				<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_4.jpg" alt=""></a></li>
-				<li><a href="#"><img src="{{ STATIC_URL }}images/detail_thumbnail_5.jpg" alt=""></a></li>
+				{% for image in small_images %}
+				<li class="image_thumb"><a href="#"	><img src="{{ MEDIA_URL }}{{ image }}" alt="" id="small_image_{{ forloop.counter }}"></a></li>
+				{% endfor %}
 			</ul>
 		</div> <!-- end of: map -->
-	
+		{% for image in big_images %}
+			<div style="display: none" id="holder_for_image_{{ forloop.counter }}">
+				{% if not forloop.first %}
+				<img id="big_image_{{ forloop.counter }}" src="{{ MEDIA_URL }}{{ image }}" alt="Detail Image" >
+				{% endif %}
+			</div> 
+		{% endfor %}
+		<script type="text/javascript">
+			$(window).load(function () {
+				$('.image_thumb').each(function () {
+					$(this).click(function () {
+						var reg = /small_image_([0-9]+)/g;
+						match = reg.exec($(this).find('a img').attr('id'));
+						var num = match[1];
+
+						reg = /big_image_([0-9]+)/g;
+						match = reg.exec($('div#map img:first').attr('id'));
+						var old_num = match[1];
+
+						// Put the old image away
+						$('div#holder_for_image_' + old_num).append($('div#map img:first'));
+
+						// Bring the new one in
+						$('div#map').prepend($('div#holder_for_image_' + num + ' img'));
+					});
+				});
+			});
+		</script>
+
 		{% include "elements/searchboxes/form.html" %}
 	
 	</div><!-- end of: row 1 -->
@@ -51,7 +117,7 @@
 	<div id="sharebar" class="row">
 		<ul class="share">
 			<li><a href="#"><img src="{{ STATIC_URL }}images/love_icon.png" alt="{% gettext detail-love_alt %}"> {% gettext detail-love_text %}</a></li>
-			<li><a href="#"><img src="{{ STATIC_URL }}images/email_icon.png" alt="{% gettext detail-email-alt %}"> {% gettext detail-email_text %}</a></li>
+			<li><a href="mailto:"><img src="{{ STATIC_URL }}images/email_icon.png" alt="{% gettext detail-email-alt %}"> {% gettext detail-email_text %}</a></li>
 			<li><a href="#"><img src="{{ STATIC_URL }}images/print_icon.png" alt="{% gettext detail-print_alt %}"> {% gettext detail-print_text %}</a></li>
 			<li><a href="#"><img src="{{ STATIC_URL }}images/facebook_icon.png" alt="{% gettext detail-facebook_alt %}"> {% gettext detail-facebook_text %}</a></li>
 			<li><a href="#"><img src="{{ STATIC_URL }}images/twitter_icon_black.png" alt="{% gettext detail-twitter_alt %}"> {% gettext detail-twitter_text %}</a></li>
@@ -61,13 +127,13 @@
 	<div class="row" id="row3"> <!-- TODO: This part should be generated automatically. -->
 	
 		<div class="col1">
-			<h2>Property Details</h2>
-			<p><strong>Property Ref No: 3418</strong></p>
-			<p>An opportunity to purchase a simply stunning two bedroom and two bathroom apartment at London's newest and most prestigious London landmark building. At 43 storey's, Strata is a highly impressive modern residential tower incorporating cutting edge architecture and design and leading the way in sustainability. Sitting at the heart of Elephant &amp; Castle and only moments from the South Bank and transport links the development enjoys a highly enviable location</p>
+			<h2>{% gettext detail-Property_Details %}</h2>
+			<p><strong>{% gettext detail-Property_Ref_No %} {{ property.property_id }}</strong></p>
+			<p>{{ property.description }}</p>
 		</div>
 	
 		<div class="col2">
-			<h2>Key Features</h2>
+			<h2>This part can't be generated!!!!</h2>
 			<ul>
 				<li>16th Floor</li>
 				<li>Two bedroom/two bathroom (one en-suite)</li>
