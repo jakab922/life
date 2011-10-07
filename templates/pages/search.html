@@ -7,10 +7,7 @@
 {% include "elements/search_content/result_bar.html" with master_class="result_bar" %}
 <script type="text/javascript">
 // Script for handling pagination, ordering and page change events. It's here because the header and the footer is the same code and so included twice.
-handle_page_numbers = function(curr_page, last_page) {
-	// Removing the old page numbers.
-	$('li.page_number').remove();
-
+handle_page_numbers = function(curr_page, last_page, res_count) {
 	// Calculating the slice.
 	var slice = [];
 
@@ -34,32 +31,32 @@ handle_page_numbers = function(curr_page, last_page) {
 	}
 
 	// Creating the new page links
-	var page_links = '';
-	for(var i = 0; i < slices.length; i++) {
-		if(slices[i] == curr_page) {
-			page_links += '<li class="page_number selected"><a href="#">' + slices[i] + '</a></li>';
+	$('li.page_number').each(function () {
+		if(slice.indexOf(parseInt($(this).text())) != -1) {
+			if(parseInt($(this).find('a').text()) == curr_page) {
+				$(this).addClass('selected');
+			}
+			$(this).show()
 		} else {
-			page_links += '<li class="page_number"><a href="#">' + slices[i] + '</a></li>';
+			if($(this).hasClass('selected')) {
+				$(this).removeClass('selected');
+			}
+			$(this).hide();
 		}
-	};
-
-	// Add page links to the page.
-	$('div.pagination ul li.prev').each(function () {
-		$(this).after(page_links);
 	});
 }
 
 handle_next_prev = function (curr,max) {
 	if(curr == 1) {
-		$('li.prev').hide();
+		$('li.prev').css('visibility', 'hidden');
 	} else {
-		$('li.next').show();
+		$('li.prev').css('visibility', 'visible');
 	}
 
-	if(curr = max) {
-		$('li.next').hide();
+	if(curr == max) {
+		$('li.next').css('visibility', 'hidden');
 	} else {
-		$('li.next').show();
+		$('li.next').css('visibility', 'visible');
 	}
 };
 
@@ -67,33 +64,35 @@ handle_item_changes = function(curr_page, next_page, res_per_page, res_count) {
 	results = $('div#search_results div.result');
 
 	if(curr_page != next_page) {
-		for(var i = (curr_page - 1) * res_per_page; i < Math.min(curr_page * res_per_page, res_count - 1); i++) {
+		for(var i = (curr_page - 1) * res_per_page; i < Math.min(curr_page * res_per_page, res_count); i++) {
 			$(results[i]).hide();
 		}
 
-		for(var i = (next_page - 1) * res_per_page; i < Math.min(next_page * res_per_page, res_count - 1); i++) {
+		for(var i = (next_page - 1) * res_per_page; i < Math.min(next_page * res_per_page, res_count); i++) {
 			$(results[i]).show();
 		}		
 	}
 };
 
-var current_page = 1;
+
 
 $(window).load(function () {
-	var result_count = $('div#search_results div.result').length;
+	var current_page = 1;
 	var curr_result_per_page = {{ default_result_per_page }};
 	var curr_ordering = '{{ default_ordering }}';
 	var curr_total_pages;
+	var result_count = $('div#search_results div.result').length;
+
 	if(result_count % curr_result_per_page == 0) {
 		curr_total_pages = result_count / curr_result_per_page;
 	} else {
-		curr_total_pages = result_count / curr_result_per_page + 1;
+		curr_total_pages = Math.floor(result_count / curr_result_per_page) + 1;
 	}
 
 	handle_next_prev(current_page, curr_total_pages);
 
 	// Adding the initial page numbers
-	handle_page_numbers(current_page, curr_total_pages);
+	handle_page_numbers(current_page, curr_total_pages, result_count);
 
 	// Adding the initial search results to the page.
 	var to = Math.min(result_count, curr_result_per_page);
@@ -104,14 +103,14 @@ $(window).load(function () {
 		}
 	}
 
-	/*
 	// Handling a page change via next button
 	$('li.next a').each(function () {
-		$(this).click( function () {
-			current_page += 1;
+		$(this).click( function (event) {
+			event.preventDefault();
+			current_page = current_page + 1;
 			
 			// Changing the available page numbers
-			handle_page_numbers(current_page, curr_total_pages);
+			handle_page_numbers(current_page, curr_total_pages, result_count);
 
 			// Hiding next and/or prev if necessary
 			handle_next_prev(current_page, curr_total_pages);
@@ -123,11 +122,12 @@ $(window).load(function () {
 
 	// Handling a page change via the prev button
 	$('li.prev a').each(function () {
-		$(this).click( function () {
-			current_page -= 1;
+		$(this).click( function (event) {
+			event.preventDefault();
+			current_page = current_page - 1;
 			
 			// Changing the available page numbers
-			handle_page_numbers(current_page, curr_total_pages);
+			handle_page_numbers(current_page, curr_total_pages, result_count);
 
 			// Hiding next and/or prev if necessary
 			handle_next_prev(current_page, curr_total_pages);
@@ -139,11 +139,12 @@ $(window).load(function () {
 
 	// Handling a page change via clicking on a page number
 	$('li.page_number a').each(function () {
-		$(this).click(function () {
-			var new_page = $(this).text();
+		$(this).click(function (event) {
+			event.preventDefault();
+			var new_page = parseInt($(this).text());
 			
 			// Changing the available page numbers
-			handle_page_numbers(new_page, curr_total_pages);
+			handle_page_numbers(new_page, curr_total_pages, result_count);
 
 			// Hiding next and/or prev if necessary
 			handle_next_prev(new_page, curr_total_pages);
@@ -156,33 +157,73 @@ $(window).load(function () {
 	});
 
 	// Handling change of result per page
-	$('select.per_page').change(function () {
-		curr_result_per_page = $(select.per_page option:selected).attr('value');
+	$('select[name="per_page"]').change(function () {
+		curr_result_per_page = parseInt($(this).find('option:selected').attr('value'));
+
+		// Setting the other selector to the same value
+		$('select[name="per_page"] option').each(function () {
+			if(parseInt($(this).attr('value')) == curr_result_per_page) {
+				$(this).attr('selected', "selected");
+			} else {
+				$(this).removeAttr('selected');
+			}
+		});
 		
 		if(result_count % curr_result_per_page == 0) {
 			curr_total_pages = result_count / curr_result_per_page;
 		} else {
-			curr_total_pages = result_count / curr_result_per_page + 1;
+			curr_total_pages = Math.floor(result_count / curr_result_per_page) + 1;
 		}
 
 		var next_page = 1;
 		
 		// Changing the available page numbers
-		handle_page_numbers(next_page, curr_total_pages);
+		handle_page_numbers(next_page, curr_total_pages, result_count);
 
 		// Hiding next and/or prev if necessary
 		handle_next_prev(next_page, curr_total_pages);
 
 		// Changing the items currently displayed
-		handle_item_changes(current_page, next_page, curr_result_per_page, result_count);
+		var t = Math.min(result_count, curr_result_per_page);
+		var r = $('div#search_results div.result');
+		for(var i = 0; i < result_count; i++) {
+			if(i >= t) {
+				$(r[i]).hide();
+			} else {
+				$(r[i]).show();
+			}
+		}
 
 		current_page = next_page;
 	});
 
 	// Handling change of ordering
-	$('select.sort_by').change(function () {
-		
-	});*/
+	$('select[name="sort_by"]').change(function () {
+		curr_ordering = $('select[name="sort_by"] option:selected').attr('value');
+
+		var ord_r = $('div#search_results div.result').get();
+
+		ord_r.sort(function (a,b) {
+			var aPriceText = $(a).find('span.price').attr('id');
+			var pricePattern = /[0-9]+_price_([0-9]+)/g;
+			var match = pricePattern.exec(aPriceText);
+			var aPrice = parseInt(match[1]);
+
+			var bPriceText = $(b).find('span.price').attr('id');
+			pricePattern = /[0-9]+_price_([0-9]+)/g;
+			match = pricePattern.exec(bPriceText);
+			var bPrice = parseInt(match[1]);
+			
+			if(curr_ordering == 'plh') {
+				return (aPrice < bPrice) ? -1 : (aPrice > bPrice) ? 1 : 0;				
+			} else { // curr_ordering == 'phl'
+				return (aPrice > bPrice) ? -1 : (aPrice < bPrice) ? 1 : 0;
+			}	
+		});
+
+		var holder = $('div#search_results');
+		$.each(ord_r, function (index, item) { holder.append(item); });
+	});
 });
 </script>
 
@@ -227,7 +268,7 @@ $(window).load(function () {
 		{{ result.description }}
 	</div>
 	<div class="result_options">
-		<span class="price">£{{ result.price }}{% if result.sale_type == 'R' %}<small> p/w</small>{% endif %}</span>
+		<span class="price" id="{{ result.property_id }}_price_{{ result.price }}" >£{{ result.price }}{% if result.sale_type == 'R' %}<small> p/w</small>{% endif %}</span>
 		<a class="button_2" href="#" id="result_button_{{ result.property_id }}" >{% gettext search-View_details %}</a>
 		<a id="shortlist_button_{{ result.property_id }}" class="button_1" href="">{% gettext search-Add_to_shortlist %}</a>
 	</div>
@@ -247,13 +288,11 @@ $(window).load(function () {
 			var match = reg.exec($(this).find('a').text());
 			var id = match[1];
 			var num = match[2];
-			console.log('id ' + id + ' num ' + num)
 
 			reg = /([^_]+)_([^_]+)/g;
 			match = reg.exec($('div#result_' + id + ' div.result_image div.controls ul li.selected a').text());
 
 			var old_num = match[2];
-			console.log('old_num ' + old_num)
 			
 			// Adding the old picture to it's holder
 			$('#' + id + '_' + old_num + '_holder').append($('#result_' + id + ' img:first'));
@@ -270,7 +309,8 @@ $(window).load(function () {
 	});
 
 	$('a.button_1').each(function () {
-		$(this).click( function () {
+		$(this).click( function (event) {
+			event.preventDefault();
 			var reg = /shortlist_button_([0-9]+)/g;
 			var match = reg.exec($(this).attr('id'));
 			var id = match[1];
@@ -296,7 +336,8 @@ $(window).load(function () {
 	});
 
 	$('a.button_2').each(function () {
-		$(this).click(function () {
+		$(this).click(function (event) {
+			event.preventDefault();
 			var detail_pattern = /result_button_([0-9]+)$/g;
 			var detail_match = detail_pattern.exec(this.id);
 			var detail_id = detail_match[1];
@@ -308,7 +349,7 @@ $(window).load(function () {
 			var hidden = document.createElement('input');
 			hidden.setAttribute("type", "hidden");
 			hidden.setAttribute("name", "property_ids");
-			hidden.setAttribute("value", "[" + property_ids.join(', ') + "]");
+			hidden.setAttribute("value", '[ ' + property_ids.join(', ') + ' ]');
 			form.appendChild(hidden);
 
 			var csrf = document.createElement('input');

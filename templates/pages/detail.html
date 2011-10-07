@@ -11,9 +11,46 @@
 	<div class="result_bar detail">
 		<a class="prev">&lt; {% gettext detail-Previous_property %}</a>
 		<ul class="detail_options">
-			<li class="selected"><a href="#">{% gettext detail-Photos %}</a> |</li>
-			<li><a href="#">{% gettext detail-Map %}</a> |</li>
-			<li><a href="#">{% gettext detail-Floorplan %}</a></li>
+			<li class="selected"><a href="#" id="detail-image_link">{% gettext detail-Photos %}</a> |</li>
+			<li><a href="#" id="detail-map_link">{% gettext detail-Map %}</a> |</li>
+			<li><a href="#" id="detail-floorplan_link">{% gettext detail-Floorplan %}</a></li>
+			<script type="text/javascript">
+				$('a#detail-image_link').click(function (event) {
+					event.preventDefault();
+					$('div#map_holder').hide();
+					$('div#floorplan_holder').hide();
+					$('div#image_holder').show();
+					$('a#detail-map_link').parent().removeClass('selected');
+					$('a#detail-floorplan_link').parent().removeClass('selected');
+					$('a#detail-image_link').parent().addClass('selected');
+				});
+
+				var map_not_loaded = true;
+
+				$('a#detail-map_link').click(function (event) {
+					event.preventDefault();
+					if (map_not_loaded) {
+						map_not_loaded = false;
+						map_loader();
+					};
+					$('div#map_holder').show();
+					$('div#floorplan_holder').hide();
+					$('div#image_holder').hide();
+					$('a#detail-map_link').parent().addClass('selected');
+					$('a#detail-floorplan_link').parent().removeClass('selected');
+					$('a#detail-image_link').parent().removeClass('selected');
+				});
+
+				$('a#detail-floorplan_link').click(function (event) {
+					event.preventDefault();
+					$('div#map_holder').hide();
+					$('div#floorplan_holder').show();
+					$('div#image_holder').hide();
+					$('a#detail-map_link').parent().removeClass('selected');
+					$('a#detail-floorplan_link').parent().addClass('selected');
+					$('a#detail-image_link').parent().removeClass('selected');
+				});
+			</script>
 		</ul>
 		<a class="next">{% gettext detail-Next_property %} &gt;</a>
 		<a class="back">{% gettext detail-Back_to_search_results %}</a>
@@ -30,7 +67,11 @@ var property_ids = [];
 var curr_property_id = {{ curr_property_id }};
 var curr_lang_code = '{{ curr_lang_code }}';
 
+
 $(window).load(function () {
+	$('div#map_holder').hide();
+	$('div#floorplan_holder').hide();
+
 	if(property_ids.length == 0) {
 		console.log('bubba')
 		$('a.prev').css('visibility', 'hidden');
@@ -74,12 +115,61 @@ $(window).load(function () {
 	<div class="row" id="row1">
 	
 		<div id="map"><!-- TODO: These images shouldn't be stored in static since they will be uploaded via the admin interface. -->		
-			<img id="big_image_1" src="{{ MEDIA_URL }}{{ big_images.0 }}" alt="Detail Image" >
-			<ul class="thumbnails">
-				{% for image in small_images %}
-				<li class="image_thumb"><a href="#"	><img src="{{ MEDIA_URL }}{{ image }}" alt="" id="small_image_{{ forloop.counter }}"></a></li>
-				{% endfor %}
-			</ul>
+			<div id="image_holder">
+				<img id="big_image_1" src="{{ MEDIA_URL }}{{ big_images.0 }}" alt="Detail Image" >
+				<ul class="thumbnails">
+					{% for image in small_images %}
+					<li class="image_thumb"><a href="#"	><img src="{{ MEDIA_URL }}{{ image }}" alt="" id="small_image_{{ forloop.counter }}"></a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div id="map_holder" style="height: 501; width: 698;"></div>
+			<script type="text/javascript">
+				function map_loader() {
+					var curr_property_coord = [{{ curr_property_coord.0 }}, {{ curr_property_coord.1 }}];
+					var latlng = new google.maps.LatLng(curr_property_coord[0], curr_property_coord[1]);
+					var options = {
+						zoom: 14,
+						center: latlng,
+						mapTypeId: google.maps.MapTypeId.HYBRID
+					};
+					var map = new google.maps.Map($('div#map_holder').get(0), options);
+
+					{% if property_ids %}
+						property_coords = [{% for coord in property_coords %}{{ coord }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+						for(var i = 0; i < property_ids.length; i++) {
+							if(property_ids[i] != curr_property_id) {
+								latlng = new google.maps.LatLng(property_coords[2 * i], property_coords[2 * i + 1]);
+								marker = new google.maps.Marker({position: latlng, map: map, title: 'No title', icon: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=home|ffffff|000000'});
+								marker.property_id = property_ids[i];
+								google.maps.event.addListener(marker, 'click', function() {
+									var form = document.createElement("form");
+									form.setAttribute("method", "POST");
+									form.setAttribute("action", "/{{ curr_lang_code}}/detail/" + this.property_id + "/");
+
+									var hidden = document.createElement('input');
+									hidden.setAttribute("type", "hidden");
+									hidden.setAttribute("name", "property_ids");
+									hidden.setAttribute("value", "[" + property_ids.join(', ') + "]");
+									form.appendChild(hidden);
+
+									var csrf = document.createElement('input');
+									csrf.setAttribute("type", "hidden");
+									csrf.setAttribute("name", "csrfmiddlewaretoken");
+									csrf.setAttribute("value", csrf_token);	
+									form.appendChild(csrf);
+									
+									form.submit();
+								});
+							}
+						}
+					{% endif %}
+
+					latlng = new google.maps.LatLng(curr_property_coord[0], curr_property_coord[1]);
+					marker = new google.maps.Marker({position: latlng, map: map, title: 'No title', icon: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=home|f89829|000000'});
+				};
+			</script>
+			<div id="floorplan_holder" style="height: 501; width: 698;" ></div>
 		</div> <!-- end of: map -->
 		{% for image in big_images %}
 			<div style="display: none" id="holder_for_image_{{ forloop.counter }}">
@@ -101,10 +191,10 @@ $(window).load(function () {
 						var old_num = match[1];
 
 						// Put the old image away
-						$('div#holder_for_image_' + old_num).append($('div#map img:first'));
+						$('div#holder_for_image_' + old_num).append($('div#map div#image_holder img:first'));
 
 						// Bring the new one in
-						$('div#map').prepend($('div#holder_for_image_' + num + ' img'));
+						$('div#map div#image_holder').prepend($('div#holder_for_image_' + num + ' img'));
 					});
 				});
 			});

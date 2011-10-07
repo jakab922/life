@@ -122,6 +122,14 @@ class PropertyThumbnail(models.Model):
 	def __unicode__(self):
 		return unicode(self.image)
 
+class PropertyCoordinate(models.Model):
+	property = models.ForeignKey('Property')
+	longitude = models.FloatField()
+	latitude = models.FloatField()
+
+	def __unicode__(self):
+		return unicode(self.property.address.address + u'-' + self.property.address.postcode + u'-' + unicode(self.latitude) + u', ' + unicode(self.longitude))
+
 type_choices = (('APTEN', 'Apartment (tenanted)'), ('APVAC', 'Apartment (vacant)'), ('DETA', 'Detached'), ('ENDT', 'End Of Terrace'), ('FLAT', 'High-rise'), ('HSTEN', 'House (tenanted)'), ('HSVAC', 'House (vacant)'), ('SEMI', 'Semi Detached'), ('STTEN', 'Studio (tenanted)'), ('STVAC', 'Studio (vacant)'), ('MID', 'Terraced'), ('NA', 'Not specified'))
 style_choices = (('1FLR', '1st Floor'), ('2FLR', '2nd Floor'), ('2', '3rd Floor '), ('4', '4th Floor '), ('5', '5th Floor '), ('6', '6th Floor '), ('7', '7th Floor '), ('8', '8th Floor '), ('9', '9th Floor '), ('10', '10th Floor '), ('11', '11th Floor '), ('12', '12th Floor '), ('13', '13th Floor '), ('14', '14th Floor '), ('15', '15th Floor'), ('16', '16th Floor '), ('17', '17th Floor '), ('18', '18th Floor '), ('19', '19th Floor '), ('20', '20th Floor'), ('21', '21st Floor '), ('22', '22nd Floor '), ('23', '23rd Floor'), ('24', '24th Floor'), ('25', '25th Floor'), ('26', '26th Floor'), ('27', '27th Floor'), ('28', '28th Floor'), ('29', '29th Floor'), ('30', '30th Floor'), ('31', '31st Floor'), ('32', '32nd Floor'), ('33', '33rd Floor'), ('34', '34th Floor'), ('35', '35th Floor'), ('36', '36th Floor'), ('37', '37th Floor'), ('38', '38th Floor'), ('39', '39th Floor'), ('40', '40th Floor'), ('41', '41st Floor'), ('42', '42nd Floor'), ('43', '43rd Floor'), ('44', '44th Floor'), ('45', '45th Floor'), ('DUP', 'Duplex'), ('MAIS', 'Maisonette'), ('SEMI', 'Semi-Detached'), ('NA', 'Not specified'))
 age_choices = (('NEW', 'New'), ('TENT', 'Tenanted '), ('VAC', 'Vacant '), ('VICT', 'Victorian'), ('EDWA', 'Edwardian'), ('80S', 'Eighties'), ('50S', 'Fifties'), ('40S', 'Fourties'), ('NEOG', 'Georgian'), ('90S', 'Nineties'), ('REGCY', 'Regency'), ('70S', 'Seventies'), ('60S', 'Sixties'), ('30S', 'Thirties'))

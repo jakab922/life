@@ -101,6 +101,13 @@ class PropertyThumbnailAdmin(admin.ModelAdmin):
 	
 admin.site.register(PropertyThumbnail, PropertyThumbnailAdmin)
 
+class PropertyCoordinateAdmin(admin.ModelAdmin):
+	list_display = ('property','longitude', 'latitude')
+	ordering = ('property',)
+	search_fields = ('property', 'longitude', 'latitude')
+	
+admin.site.register(PropertyCoordinate, PropertyCoordinateAdmin)
+
 class PropertyAdmin(admin.ModelAdmin):
 	list_display = ('property_id', 'address', 'branch', 'sale_type')
 	ordering = ('property_id',)

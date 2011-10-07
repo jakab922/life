@@ -28,7 +28,15 @@ def add_searchform(template_dict):
 	
 	template_dict['min_bedrooms'] = [i for i in range(7)]
 	template_dict['max_bedrooms'] = [i for i in range(1,8)]
-	
+
+	if 'property_ids' in template_dict:
+		template_dict = add_map_details(template_dict)
+		print "We've got some property ids"
+	else:
+		print "We have no property ids"
+		template_dict['property_ids'] = []
+		template_dict['property_coords'] = []
+
 	return template_dict
 	
 def add_testimonials(template_dict):
@@ -39,6 +47,19 @@ def add_testimonials(template_dict):
 def add_staff(template_dict):
 	template_dict['staff'] = StaffMember.objects.all()
 
+	return template_dict
+
+def add_map_details(template_dict):
+	coords = []
+
+	for prop_id in template_dict['property_ids']:
+		print type(prop_id), prop_id
+		ccord = PropertyCoordinate.objects.filter(property__property_id = prop_id)[0]
+		print ccord
+		coords.append(ccord.latitude)
+		coords.append(ccord.longitude)
+
+	template_dict['property_coords'] = coords
 	return template_dict
 	
 def landlord_services(request, service_name, lang_code):
@@ -86,49 +107,9 @@ def city_guide(request, area, lang_code):
 		
 	return render_to_response('pages/city_guide.html', template_dict, context_instance = RequestContext(request))
 
-def about_us(request, subpage, lang_code):
-	if subpage not in ['recruitment', 'our_staff']:
-		subpage = 'base'
-		
-	template_dict = generate_base_dict(lang_code, '/about_us/' + subpage + '/')
-	
-	template_dict['subpage'] = subpage
-	
-	template_dict['content_name'] = 'elements/about_us_content/' + subpage + '.html'
 
-	if subpage in ['base', 'recruitment']:
-		template_dict['real_content_id'] = 'about'
-	else:
-		template_dict['real_content_id'] = 'staff'
-		
-	if subpage == 'base':
-		template_dict['container_class'] = 'page about'
-	elif subpage == 'recruitment':
-		template_dict['container_class'] = 'page about recruitment'
-	else:
-		template_dict['container_class'] = 'page staff'
 	
-	if subpage != 'our_staff':
-		template_dict['slider_images'] = ['images/about_image.jpg', 'images/about_image_2.jpg', 'images/about_image.jpg', 'images/about_image_2.jpg']
-		
-	template_dict = add_staff(template_dict)
-	template_dict = add_testimonials(template_dict)
-	if subpage == 'our_staff':
-		template_dict['offices'] = [OfficeDummy(range(1,3)) for i in range(2)]
-	
-	return render_to_response('pages/about_us.html', template_dict, context_instance = RequestContext(request))
-	
-def index(request, lang_code):
-	template_dict = generate_base_dict(lang_code, '/')
-	
-	template_dict = add_searchform(template_dict)
-	template_dict = add_staff(template_dict)
-	template_dict = add_testimonials(template_dict)
-	
-	return render_to_response('pages/index.html', template_dict, context_instance = RequestContext(request))
-	
-def to_english(request):
-	return redirect('/uk/')
+
 	
 def search(request, lang_code):
 	template_dict = generate_base_dict(lang_code, '/search/')
@@ -184,6 +165,8 @@ def search(request, lang_code):
 	template_dict['result_per_page_dict'] = [(5,'5'), (10,'10'), (15,'15'), (99999999, all_text)]
 	template_dict['default_result_per_page'] = 5
 	
+	print template_dict
+
 	return render_to_response('pages/search.html', template_dict, context_instance = RequestContext(request))
 	
 def landlords(request, lang_code):
@@ -229,34 +212,9 @@ def currency_exchange(request, lang_code):
 
 	return render_to_response('pages/corporate.html', template_dict, context_instance = RequestContext(request))
 	
-def faq(request, lang_code):
-	template_dict = generate_base_dict(lang_code, '/faq/')
-	
-	template_dict = add_testimonials(template_dict)
 
-	return render_to_response('pages/faq.html', template_dict, context_instance = RequestContext(request))
 	
-def detail(request, lang_code, prop_id):
-	template_dict = generate_base_dict(lang_code, '/detail/')
 
-	if request.method == 'POST' and 'property_ids' in request.POST:
-		print request.POST['property_ids']
-		template_dict['property_ids'] = request.POST['property_ids']
-	else:
-		print 'nincs benne'
-	template_dict['curr_property_id'] = prop_id
-
-	template_dict['property'] = Property.objects.filter(property_id = prop_id)[0]
-	template_dict['property'].description = PropertyDescription.objects.filter(language__lang_code = lang_code, property__property_id = template_dict['property'].property_id)[0].description
-
-	images = PropertyThumbnail.objects.filter(property__property_id = prop_id)
-	template_dict['big_images'] = [sub(r'(.*/)([^/]+)', r'\1detail-big/\2', i.image.name) for i in images if match(r'.*(T|t)humbnail.*', i.image.name) == None][:5]
-	template_dict['small_images'] = [sub(r'(.*/)([^/]+)', r'\1detail-big/\2', i.image.name) for i in images if match(r'.*(T|t)humbnail.*', i.image.name) == None][:5]
-	
-	template_dict = add_searchform(template_dict)
-	template_dict = add_testimonials(template_dict)
-	
-	return render_to_response('pages/detail.html', template_dict, context_instance = RequestContext(request))
 
 # Only dummy functions and classes below this point
 class OfficeDummy():
@@ -271,3 +229,8 @@ class TestimonialDummy():
 		
 	def __str__(self):
 		return str((self.thumbnail, self.address))
+
+# def map_test(request):
+# 	template_dict = {}
+# 	template_dict['coords'], template_dict['addresses'], template_dict['property_ids'] = zip(*[((i.latitude, i.longitude), i.property.address.address, i.property.property_id) for i in PropertyCoordinate.objects.all()])
+# 	return render_to_response('pages/map_test.html', template_dict)

@@ -10,7 +10,65 @@
 		
 		<label for="district">{% gettext searchboxes-form-location_label %}</label>
 		<input type="text" name="district" placeholder="{% gettext searchboxes-form-location_placeholder %}">
-		<p>{% gettext searchboxes-form-area_guide_paragraph %}</p>
+		<p>View <a href="{{ curr_lang_code }}/city_guide/all/">London area guide</a> or search by <a href="#" id="search_by_map_link" >Map</a></p>
+		<script type="text/javascript">
+			var search_map_not_ready = true;
+
+			var property_coords = [{% for coord in property_coords %}{{ coord }}{% if not forloop.last %}, {% endif %}{% endfor %}]; 
+			var hidden_properties = [{% for coord in property_ids %}-1{% if not forloop.last %}, {% endif %}{% endfor %}];
+
+
+			$(window).load(function () {
+				$(document).keyup(function (e) {
+					if(e.keyCode == 27) {
+						$('div#map_modal').fadeOut();
+					}
+				});
+
+				$('div#map_modal .close').click(function () {
+					$('div#map_modal').fadeOut();
+				});
+
+				$('a#search_by_map_link').click(function (event) {
+					event.preventDefault();
+
+					$('div#map_modal').fadeIn();
+					if(property_ids.length != 0) {
+						if(search_map_not_ready) {
+							search_map_not_ready = false;
+
+							var latlng = new google.maps.LatLng(51.50015240, -0.12623620);
+							var options = {
+								zoom: 11,
+								center: latlng,
+								mapTypeId: google.maps.MapTypeId.HYBRID
+							};
+							var map = new google.maps.Map($('div#map_box').get(0), options);
+							
+							for(var i = 0; i < property_ids.length; i++) {
+								latlng = new google.maps.LatLng(property_coords[2 * i], property_coords[2 * i + 1]);
+								marker = new google.maps.Marker({position: latlng, map: map, title: 'No title', icon: 'https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=home|ffffff|000000'});
+								marker.map = map
+								google.maps.event.addListener(marker, 'click', function () {
+									var iw = new google.maps.InfoWindow({'content': 'blalbalbl<a href="http://www.google.com">asdf</a>alal<img src="http://www.google.co.uk/images/srpr/logo3w.png"></img>', 'position': this.position });
+									iw.open(marker.map, this);
+								});
+							}
+
+							
+							google.maps.event.addListener(map, 'bounds_changed', function () {
+								for(var i = 0; i < property_ids.length; i++) {
+									
+								}
+							});
+							console.log('We have some property ids')
+						}
+					} else {
+						console.log('We need some property ids')
+					}
+				});
+			});
+		</script>
 	</fieldset>
 	<fieldset id="fieldset_2">
 		<label for="property_type">{% gettext searchboxes-form-property_type_label %}</label>
@@ -85,14 +143,6 @@
 	
 	var min_bedrooms = [{% for num in min_bedrooms %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}];
 	var max_bedrooms = [{% for num in max_bedrooms %}{{ num }}{% if not forloop.last %},{% endif %}{% endfor %}];
-	
-	function wait (millis) {
-		var date = new Date();
-		var curDate = null;
-
-		do { curDate = new Date(); } 
-		while(curDate-date < millis);
-	}
 	
 	$('#min_price-select').change(function() {
 		// Removing min from the enabled options if it's there
